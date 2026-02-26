@@ -55,7 +55,6 @@ export default function ChunkedModel({ url }) {
         let receivedLength = 0;
         let chunks = [];
 
-        // Streaming the download
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
@@ -68,7 +67,6 @@ export default function ChunkedModel({ url }) {
           }
         }
 
-        // Reconstruct binary data
         let allChunks = new Uint8Array(receivedLength);
         let position = 0;
         for (let chunk of chunks) {
@@ -76,20 +74,16 @@ export default function ChunkedModel({ url }) {
           position += chunk.length;
         }
 
-        // Clear references to chunks early to help Garbage Collection
         chunks = [];
 
         const loader = new GLTFLoader();
         loader.parse(allChunks.buffer, '', (gltf) => {
           if (!signal.aborted) {
-            // Set the new scene
             setScene(gltf.scene);
           } else {
-            // If the user switched models while we were parsing, dump this one immediately
             disposeScene(gltf.scene);
           }
           
-          // Manually nullify the buffer once parsing is done
           allChunks = null;
         });
 

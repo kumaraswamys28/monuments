@@ -23,7 +23,6 @@ export default function Layouts() {
         )
         const model = await response.json()
 
-        // assuming API returns array
         console.log(model);
         
         setdata(model)
@@ -35,7 +34,6 @@ export default function Layouts() {
     fetchModel()
   }, [id])
 
-  // 2️⃣ Fetch IoT data ONLY after model exists
   useEffect(() => {
     if (!data?.iot_data || !data?.api_key) return
 
@@ -49,6 +47,7 @@ export default function Layouts() {
         })
 
         const result = await response.json()
+        console.log(result)
 
         if (Array.isArray(result) && result.length > 0) {
           const latest = result[0]
