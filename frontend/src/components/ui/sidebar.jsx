@@ -222,7 +222,7 @@ function Sidebar({
 
 function SidebarTrigger({
   className,
-  onClick,
+  
   ...props
 }) {
   const { toggleSidebar } = useSidebar()
@@ -235,7 +235,7 @@ function SidebarTrigger({
       size="icon"
       className={cn("size-7", className)}
       onClick={(event) => {
-        onClick?.(event)
+        onclick?.(event)
         toggleSidebar()
       }}
       {...props}>
