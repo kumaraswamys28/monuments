@@ -3,7 +3,7 @@ const modelsData = [
     id: 1,
     title:"hampi stone chariot",
     url: "/model.glb",
-    transform: { position: [0, 0, 0], rotation: [0, 180, 0], scale: 1.5 },
+    transform: { position: [0, -1, 0], rotation: [0, 180, 0], scale: 1.5 },
     iot_data:
       "https://ykdqxxsnhfxlncttgxrk.supabase.co/rest/v1/iot_data?order=timestamp.desc&limit=1",
     api_key:
