@@ -16,9 +16,7 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
+
 import {
   Sidebar,
   SidebarContent,
@@ -80,12 +78,12 @@ export function AppSidebar({ ...props }) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link to="#">
+              <Link to="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-lg leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
+                  <span className="truncate font-medium">RVCE</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </Link>

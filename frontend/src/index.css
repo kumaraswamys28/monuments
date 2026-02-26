@@ -122,3 +122,29 @@
     @apply bg-background text-foreground;
     }
 }
+
+
+
+.majestic-title {
+  font-family: 'Cinzel', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+
+  /* Brighter, richer gold gradient */
+  background: linear-gradient(
+    to bottom,
+    #fff2b2 0%,   /* Bright highlight */
+    #f1c75b 30%,  /* Vivid gold */
+    #d4af37 55%,  /* Classic gold */
+    #b8862b 100%  /* Warm bronze (lighter than before) */
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Depth + shine */
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}

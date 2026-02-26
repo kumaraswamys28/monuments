@@ -63,14 +63,14 @@ export default function Renderer({data ,res}) {
       <div
         style={{
           position: "absolute",
-          top: "10px",
+          top: "0px",
           width: "100%",
           textAlign: "center",
           fontFamily: "sans-serif",
           pointerEvents: "none",
         }}
       >
-        <h1 className="majestic-title">{data.title}</h1>{" "}
+        <h1 className="majestic-title ">{data.title}</h1>{" "}
       </div>
     </div>
   );

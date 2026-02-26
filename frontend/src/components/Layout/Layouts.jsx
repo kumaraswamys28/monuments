@@ -75,7 +75,7 @@ export default function Layouts() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      {/* <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -94,7 +94,26 @@ export default function Layouts() {
             <div className="bg-muted/50 aspect-video rounded-xl" />
             <div className="bg-muted/50 aspect-video rounded-xl" />
           </div>
-        </div>
+        </div> */}
+        <SidebarInset className="flex flex-col h-[98vh] min-h-0 overflow-hidden">
+  <header className="flex h-16 shrink-0 items-center gap-2">
+    <div className="flex items-center gap-1 px-2">
+      <SidebarTrigger className="-ml-1" />
+      <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+    </div>
+  </header>
+
+  <div className="flex flex-1 p-2 gap-4 min-h-0 overflow-hidden">
+    <div className="flex-1 bg-muted/50 rounded-xl overflow-hidden">
+      <Renderer data={data} res={res} />
+    </div>
+
+    <div className="w-[30%] min-w-[280px] flex flex-col gap-4 min-h-0">
+      <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
+      <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
+      <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
+    </div>
+  </div>
       </SidebarInset>
     </SidebarProvider>
   )
