@@ -121,8 +121,27 @@ export default function ChunkedModel({ url }) {
   }
 
   return (
+
     <group ref={group}>
-      <primitive object={scene} />
+      <primitive object={scene}/>
     </group>
-  );
+
+
+  // <group ref={group}>
+  //   <primitive 
+  //     object={scene} 
+  //     onClick={(e) => {
+  //       // Stop the click from "bleeding through" to objects behind it
+  //       e.stopPropagation(); 
+        
+  //       const { x, y, z } = e.point;
+  //       console.log(`Clicked Position: [${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)}]`);
+        
+  //       // Optional: Copy to clipboard automatically
+  //       navigator.clipboard.writeText(`[${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)}]`);
+  //       alert(`Coordinates copied: ${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)}`);
+  //     }}
+  //   />
+  // </group>
+);
 }

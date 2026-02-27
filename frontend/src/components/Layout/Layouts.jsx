@@ -5,14 +5,17 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Outlet, useParams } from "react-router-dom"
 import Renderer from "../Rendering/Renderer"
+import Cards from "../ui/cards"
 
 export default function Layouts() {
  const {id}=useParams();
   const [data,setdata]=useState([]);
   const [res,setRes]=useState([]);
+  const cardsRef = useRef();
+  
   useEffect(() => {
     if (!id) return
 
@@ -47,19 +50,22 @@ export default function Layouts() {
         })
 
         const result = await response.json()
-        console.log(result)
 
         if (Array.isArray(result) && result.length > 0) {
-          const latest = result[0]
+          // const latest = result[0]
 
-          setRes({
-            vibration: latest.vibration,
-            temperature: latest.temperature,
-            aqi: latest.aqi,
-            visitor_count: latest.visitor_count,
-            rainfall: latest.rainfall,
-            humidity: latest.humidity,
-          })
+          // setRes({
+          //   vibration: latest.vibration,
+          //   temperature: latest.temperature,
+          //   aqi: latest.aqi,
+          //   visitor_count: latest.visitor_count,
+          //   rainfall: latest.rainfall,
+          //   humidity: latest.humidity,
+          // })
+          console.log(result[0],"log 000000000000000000000000");
+          
+cardsRef.current?.update(result[0]);
+
         }
       } catch (err) {
         console.error("Error fetching IoT data:", err)
@@ -109,7 +115,10 @@ export default function Layouts() {
     </div>
 
     <div className="w-[30%] min-w-[280px] flex flex-col gap-4 min-h-0">
-      <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
+      <Cards 
+      ref={cardsRef}
+      // data={res}
+      />
       <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
       <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
     </div>

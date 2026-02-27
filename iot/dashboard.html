@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Twin IoT Dashboard</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      padding: 20px;
+      background: #1e293b;
+      margin: 0;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .value {
+      font-size: 2em;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    .timestamp {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📡 Digital Twin Live Dashboard</h1>
+
+<div class="container">
+
+  <div class="card">
+    🌡 Temperature
+    <div class="value" id="temperature">--</div>
+  </div>
+
+  <div class="card">
+    💧 Humidity
+    <div class="value" id="humidity">--</div>
+  </div>
+
+  <div class="card">
+    📳 Vibration
+    <div class="value" id="vibration">--</div>
+  </div>
+
+  <div class="card">
+    👥 Visitor Count
+    <div class="value" id="visitors">--</div>
+  </div>
+
+  <div class="card">
+    🌫 AQI
+    <div class="value" id="aqi">--</div>
+  </div>
+
+  <div class="card">
+    🌧 Rainfall
+    <div class="value" id="rainfall">--</div>
+  </div>
+
+</div>
+
+<div class="timestamp">
+  Last Updated: <span id="timestamp">--</span>
+</div>
+
+<script>
+
+const SUPABASE_URL = "https://ykdqxxsnhfxlncttgxrk.supabase.co";
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrZHF4eHNuaGZ4bG5jdHRneHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MjEyNjUsImV4cCI6MjA4NzM5NzI2NX0.68SqWEPDhLwvrWcpMLKklWsA96mLq2Bpw55QUb55zRE";
+
+async function fetchData() {
+
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/iot_data?order=timestamp.desc&limit=1`,
+    {
+      headers: {
+        apikey: ANON_KEY,
+        Authorization: `Bearer ${ANON_KEY}`
+      }
+    }
+  );
+
+  const data = await response.json();
+
+  if(data.length > 0){
+    const row = data[0];
+
+    document.getElementById("temperature").innerText = row.temperature + " °C";
+    document.getElementById("humidity").innerText = row.humidity + " %";
+    document.getElementById("vibration").innerText = row.vibration;
+    document.getElementById("visitors").innerText = row.visitor_count;
+    document.getElementById("aqi").innerText = row.aqi;
+    document.getElementById("rainfall").innerText = row.rainfall + " mm";
+    document.getElementById("timestamp").innerText = new Date(row.timestamp).toLocaleString();
+  }
+}
+
+setInterval(fetchData, 3000);
+fetchData();
+
+</script>
+
+</body>
+</html>

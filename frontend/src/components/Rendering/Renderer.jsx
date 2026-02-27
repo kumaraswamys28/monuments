@@ -1,6 +1,6 @@
 import React ,{ useRef,useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Center, Environment, Stage } from "@react-three/drei";
+import { Center, Environment,Html, Stage } from "@react-three/drei";
 import {
   OrbitControls,
   PerspectiveCamera,
@@ -14,9 +14,55 @@ import { Maximize, Minimize,MapPin } from "lucide-react"; // Optional: for nice 
 import ChunkedModel from "./Chunked";
 import { Link } from "react-router-dom";
 import { AxesHelper } from "three";
-export default function Renderer({data ,res}) {
+
+const DataPin = ({ position, label, value, unit }) => {
+  return (
+    <group position={position}>
+      {/* The Visual Pin/Pointer */}
+      <mesh>
+        <sphereGeometry args={[0.05, 16, 16]} />
+        <meshBasicMaterial color="red" />
+      </mesh>
+
+      {/* The HTML Label */}
+      <Html
+        distanceFactor={10} // Scales the text based on camera distance
+        position={[7.16, 53.06, -2.32]} // Offset it slightly above the pin
+        center
+      >
+        <div style={{
+          background: 'white',
+          padding: '5px 10px',
+          borderRadius: '8px',
+          border: '1px solid #ccc',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none', // Allows orbit controls to work through the label
+          boxShadow: '0px 2px 10px rgba(0,0,0,0.2)',
+          fontFamily: 'sans-serif',
+          fontSize: '12px'
+        }}>
+          <strong>{label}:</strong> {value}{unit}
+          {/* Visual arrow pointing down */}
+          <div style={{
+            position: 'absolute',
+            bottom: '-10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            borderLeft: '5px solid transparent',
+            borderRight: '5px solid transparent',
+            borderTop: '10px solid white'
+          }} />
+        </div>
+      </Html>
+    </group>
+  );
+};
+
+
+const Renderer = React.memo(({ data }) =>{
 const containerRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  
 
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
@@ -46,15 +92,16 @@ const containerRef = useRef(null);
     <div ref={containerRef} className="relative w-full h-full">
 
       <Canvas
-        shadows
+        
         dpr={[1, 2]} 
         gl={{
           antialias: false, 
           powerPreference: "high-performance",
         }}
       >
-        
-        <fog attach="fog" args={['#e2e0e0', 5, 50 - (res.humidity * 0.3)]} />
+        <gridHelper/>
+        <axesHelper/>
+        {/* <fog attach="fog" args={['#e2e0e0', 5, 50 - (res.humidity * 0.3)]} /> */}
 
       
 <PerspectiveCamera makeDefault near={0.1}
@@ -63,24 +110,22 @@ const containerRef = useRef(null);
         {/* Controls */}
 <OrbitControls 
           makeDefault 
-          enableDamping 
-minPolarAngle={Math.PI / 2 - 0.2} 
-  maxPolarAngle={Math.PI / 2 + 0.0}          minZoom={20}
-          maxZoom={200}
+           
+// minPolarAngle={Math.PI / 2 - 0.2} 
+  maxPolarAngle={Math.PI / 2 + 0.0}         
         />
        
-
+{/* 
     <Suspense fallback={null}>
         
-          {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -10, 0]} receiveShadow>
+           <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -10, 0]} receiveShadow>
             <planeGeometry args={[100, 100]} />
             <meshStandardMaterial color="#ffffff" opacity={0.2} transparent />
-          </mesh> */}
-          <axesHelper/>
-         <gridHelper/>
-        </Suspense>
+          </mesh> 
         
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+        </Suspense> */}
+        
+        <directionalLight position={[5, 5, 5]} intensity={0} />
 
        <Suspense fallback={null}>
         <CustomSkybox url="/360.jpg" />
@@ -130,18 +175,20 @@ minPolarAngle={Math.PI / 2 - 0.2}
       
     </div>
   );
-}
+})
 
 const SceneContent = React.memo(({ data }) => {
   return (
-   <Stage adjustCamera={true} environment="city" intensity={0.5}> 
-      {/* The Center component will force any model to sit on the Y=0 plane */}
+    <Stage adjustCamera={true} intensity={0.5}> 
       <Center top alignToBottom>
         <ChunkedModel url={data.url} />
       </Center>
     </Stage>
   );
-});
+}, (prev, next) => prev.data.url === next.data.url);
+
+
+
 
 function CustomSkybox({ url }) {
   const texture = useTexture(url);
@@ -159,3 +206,6 @@ function CustomSkybox({ url }) {
     </mesh>
   );
 }
+
+
+export default Renderer;
