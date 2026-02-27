@@ -8,14 +8,19 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { Outlet, useParams } from "react-router-dom"
 import Renderer from "../Rendering/Renderer"
-import Cards from "../ui/cards"
+import Cards from "./cards"
+import ClimateChart from "./Climate"
+import AqiChart from "./AQI"
 
 export default function Layouts() {
  const {id}=useParams();
   const [data,setdata]=useState([]);
-  const [res,setRes]=useState([]);
+  // const [res,setRes]=useState([]);
   const cardsRef = useRef();
-  
+  const chartRef = useRef();
+    const aqiRef = useRef();
+
+
   useEffect(() => {
     if (!id) return
 
@@ -65,6 +70,9 @@ export default function Layouts() {
           console.log(result[0],"log 000000000000000000000000");
           
 cardsRef.current?.update(result[0]);
+chartRef.current?.update(result[0]);
+aqiRef.current?.update(result[0]);
+
 
         }
       } catch (err) {
@@ -111,16 +119,15 @@ cardsRef.current?.update(result[0]);
 
   <div className="flex flex-1 p-2 gap-4 min-h-0 overflow-hidden">
     <div className="flex-1 bg-muted/50 rounded-xl overflow-hidden">
-      <Renderer data={data} res={res} />
+      <Renderer data={data}  />
     </div>
 
     <div className="w-[30%] min-w-[280px] flex flex-col gap-4 min-h-0">
       <Cards 
       ref={cardsRef}
-      // data={res}
       />
-      <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
-      <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" />
+      <ClimateChart ref={chartRef} />
+      <AqiChart ref={aqiRef}/>
     </div>
   </div>
       </SidebarInset>
