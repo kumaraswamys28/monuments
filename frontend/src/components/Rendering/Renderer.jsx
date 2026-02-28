@@ -87,7 +87,7 @@ const containerRef = useRef(null);
 
 
     return (
-    <div style={{ width: "100%", height: "100%", background: "#e2e0e0" }} > 
+    <div className="border-2 border-grey-500" style={{ width: "100%", height: "100%", background: "#e2e0e0" }} > 
      
     <div ref={containerRef} className="relative w-full h-full">
 
@@ -96,7 +96,7 @@ const containerRef = useRef(null);
         dpr={[1, 2]} 
         gl={{
           antialias: false, 
-          powerPreference: "high-performance",
+          // powerPreference: "high-performance",
         }}
       >
         <gridHelper/>

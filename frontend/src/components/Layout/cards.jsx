@@ -118,7 +118,7 @@ const Cards = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden border">
+    <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden border border-blue-500">
       <Table>
         <TableCaption className="mb-2">Live Telemetric Data</TableCaption>
         <TableHeader>

@@ -58,7 +58,7 @@ const AqiChart = forwardRef((props, ref) => {
   return (
     
 
-    <div className="bg-muted/50 flex-1 border rounded-xl overflow-hidden flex flex-col min-h-0">
+    <div className="bg-muted/50 flex-1 border border-blue-500 rounded-xl overflow-hidden flex flex-col min-h-0">
       <Card className="bg-transparent border-none shadow-none flex flex-col h-full min-h-0">
         <CardHeader className=" mt-[-15px] mb-0">
           <div className="flex items-center justify-between">

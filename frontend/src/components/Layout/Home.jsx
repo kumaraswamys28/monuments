@@ -23,7 +23,7 @@ export default function Home() {
             <div className="bg-muted/50 aspect-video rounded-xl" />
             <div className="bg-muted/50 aspect-video rounded-xl" />
           </div>  */}
-          <div className="bg-muted/75 min-h-[100vh] bg-green-400 flex-1 rounded-xl md:min-h-min" >this is a test</div>
+          <div className="bg-muted/75 min-h-[100vh] bg-green-400 flex-1 rounded-xl md:min-h-min" >this is a home page test</div>
         </div>
       </SidebarInset>
     </SidebarProvider>

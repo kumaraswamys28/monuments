@@ -1,49 +1,48 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { Separator } from "@/components/ui/separator"
+import { AppSidebar } from "@/components/app-sidebar";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { useEffect, useRef, useState } from "react"
-import { Outlet, useParams } from "react-router-dom"
-import Renderer from "../Rendering/Renderer"
-import Cards from "./cards"
-import ClimateChart from "./Climate"
-import AqiChart from "./AQI"
+} from "@/components/ui/sidebar";
+import { useEffect, useRef, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
+import Renderer from "../Rendering/Renderer";
+import Cards from "./cards";
+import ClimateChart from "./Climate";
+import AqiChart from "./AQI";
 
 export default function Layouts() {
- const {id}=useParams();
-  const [data,setdata]=useState([]);
+  const { id } = useParams();
+  const [data, setdata] = useState([]);
   // const [res,setRes]=useState([]);
   const cardsRef = useRef();
   const chartRef = useRef();
-    const aqiRef = useRef();
-
+  const aqiRef = useRef();
 
   useEffect(() => {
-    if (!id) return
+    if (!id) return;
 
     const fetchModel = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/api/models/${id}`
-        )
-        const model = await response.json()
+          `${import.meta.env.VITE_SERVER_URL}/api/models/${id}`,
+        );
+        const model = await response.json();
 
         console.log(model);
-        
-        setdata(model)
-      } catch (err) {
-        console.error("Failed to fetch model:", err)
-      }
-    }
 
-    fetchModel()
-  }, [id])
+        setdata(model);
+      } catch (err) {
+        console.error("Failed to fetch model:", err);
+      }
+    };
+
+    fetchModel();
+  }, [id]);
 
   useEffect(() => {
-    if (!data?.iot_data || !data?.api_key) return
+    if (!data?.iot_data || !data?.api_key) return;
 
     const fetchIoTData = async () => {
       try {
@@ -52,9 +51,9 @@ export default function Layouts() {
             apikey: data.api_key,
             Authorization: `Bearer ${data.api_key}`,
           },
-        })
+        });
 
-        const result = await response.json()
+        const result = await response.json();
 
         if (Array.isArray(result) && result.length > 0) {
           // const latest = result[0]
@@ -67,24 +66,22 @@ export default function Layouts() {
           //   rainfall: latest.rainfall,
           //   humidity: latest.humidity,
           // })
-          console.log(result[0],"log 000000000000000000000000");
-          
-cardsRef.current?.update(result[0]);
-chartRef.current?.update(result[0]);
-aqiRef.current?.update(result[0]);
+          console.log(result[0], "log 000000000000000000000000");
 
-
+          cardsRef.current?.update(result[0]);
+          chartRef.current?.update(result[0]);
+          aqiRef.current?.update(result[0]);
         }
       } catch (err) {
-        console.error("Error fetching IoT data:", err)
+        console.error("Error fetching IoT data:", err);
       }
-    }
+    };
 
-    fetchIoTData()
-    const interval = setInterval(fetchIoTData, 5000)
+    fetchIoTData();
+    const interval = setInterval(fetchIoTData, 5000);
 
-    return () => clearInterval(interval)
-  }, [data])
+    return () => clearInterval(interval);
+  }, [data]);
 
   return (
     <SidebarProvider>
@@ -109,28 +106,29 @@ aqiRef.current?.update(result[0]);
             <div className="bg-muted/50 aspect-video rounded-xl" />
           </div>
         </div> */}
-        <SidebarInset className="flex flex-col h-[98vh] min-h-0 overflow-hidden">
-  <header className="flex h-16 shrink-0 items-center gap-2">
-    <div className="flex items-center gap-1 px-2">
-      <SidebarTrigger className="-ml-1" />
-      <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-    </div>
-  </header>
+      <SidebarInset className="flex flex-col border border-black h-[98vh] min-h-0 overflow-hidden">
+        <header className="flex h-16 shrink-0 items-center gap-2">
+          <div className="flex items-center gap-1 px-2">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+          </div>
+        </header>
 
-  <div className="flex flex-1 p-2 gap-4 min-h-0 overflow-hidden">
-    <div className="flex-1 bg-muted/50 rounded-xl overflow-hidden">
-      <Renderer data={data}  />
-    </div>
+        <div className="flex flex-1 p-2 gap-4 min-h-0 overflow-hidden">
+          <div className="flex-1 bg-muted/50 rounded-xl overflow-hidden">
+            <Renderer data={data} />
+          </div>
 
-    <div className="w-[30%] min-w-[280px] flex flex-col gap-4 min-h-0">
-      <Cards 
-      ref={cardsRef}
-      />
-      <ClimateChart ref={chartRef} />
-      <AqiChart ref={aqiRef}/>
-    </div>
-  </div>
+          <div className="w-[30%] min-w-[280px] flex flex-col gap-4 min-h-0">
+            <Cards ref={cardsRef} />
+            <ClimateChart ref={chartRef} />
+            <AqiChart ref={aqiRef} />
+          </div>
+        </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

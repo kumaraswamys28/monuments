@@ -1,0 +1,83 @@
+import { AppSidebar } from "@/components/app-sidebar"
+
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { Outlet } from "react-router-dom"
+
+export default function Dashboard() {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />        
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col p-4 pt-0 h-screen overflow-hidden">
+  {/* Parent Container: Forces a 3x3 grid that fills 100% of the remaining height */}
+  <div className="grid grid-cols-3 grid-rows-3 gap-4 h-full min-h-0">
+    
+    {/* Card 1: Hampi Chariot / Monument Image */}
+    <div className="bg-muted/50 rounded-xl border border-primary/10 flex flex-col items-center justify-center border border-blue-500 p-2">
+       <span className="text-xs opacity-50 uppercase tracking-widest">Live View</span>
+       {/* Your Image or Canvas goes here */}
+    </div>
+
+    {/* Card 2: Temperature */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Temperature</p>
+      <h2 className="text-2xl font-bold">25.13°C</h2>
+    </div>
+
+    {/* Card 3: Humidity */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Humidity</p>
+      <h2 className="text-2xl font-bold">55.8%</h2>
+    </div>
+
+    {/* Card 4: Vibration (Structural Health) */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Structural Vibration</p>
+      <h2 className="text-2xl font-bold">0.611 <span className="text-xs">Hz</span></h2>
+    </div>
+
+    {/* Card 5: Visitor Count */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Current Visitors</p>
+      <h2 className="text-2xl font-bold">203</h2>
+    </div>
+
+    {/* Card 6: Air Quality Index */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">AQI Status</p>
+      <h2 className="text-2xl font-bold text-yellow-500">64</h2>
+    </div>
+
+    {/* Card 7: Rainfall */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Rainfall</p>
+      <h2 className="text-2xl font-bold">9.18 <span className="text-xs text-muted-foreground">mm</span></h2>
+    </div>
+
+    {/* Card 8: Device Information */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Device ID</p>
+      <code className="text-xs font-mono text-primary">SIM_DEVICE_01</code>
+    </div>
+
+    {/* Card 9: Last Heartbeat */}
+    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
+      <p className="text-sm text-muted-foreground">Last Update</p>
+      <p className="text-xs font-mono">2026-02-28 11:48:35</p>
+    </div>
+
+  </div>
+</div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
