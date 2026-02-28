@@ -1,0 +1,24 @@
+{
+  "name": "monuments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:all": "concurrently \"npm run dev --prefix frontend\" \"npm run start --prefix backend\" \"node iot/index.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/kumaraswamys28/monuments.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kumaraswamys28/monuments/issues"
+  },
+  "homepage": "https://github.com/kumaraswamys28/monuments#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
