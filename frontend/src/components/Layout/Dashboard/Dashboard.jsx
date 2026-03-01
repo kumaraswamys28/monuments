@@ -5,19 +5,86 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Outlet } from "react-router-dom"
+import { useEffect,useState } from "react";
+import { useParams } from "react-router-dom";
+// import { Outlet } from "react-router-dom"
+
 
 export default function Dashboard() {
+          const { id } = useParams();
+
+    // const chartRef = useRef();
+      const [data, setdata] = useState([]);
+      const [res,setRes]=useState([]);
+console.log(res);
+
+      useEffect(() => {
+    if (!id) return;
+
+    const fetchModel = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/api/models/${id}`,
+        );
+        const model = await response.json();
+
+        console.log(model);
+
+        setdata(model);
+      } catch (err) {
+        console.error("Failed to fetch model:", err);
+      }
+    };
+
+    fetchModel();
+  }, [id]);
+    
+
+      useEffect(() => {
+        if (!data?.iot_data || !data?.api_key) return;
+    
+        const fetchIoTData = async () => {
+          try {
+            const response = await fetch(data.iot_data, {
+              headers: {
+                apikey: data.api_key,
+                Authorization: `Bearer ${data.api_key}`,
+              },
+            });
+    
+            const result = await response.json();
+            console.log(result);
+            setRes(result)
+    
+            // if (Array.isArray(result) && result.length > 0) {
+              
+            //   setdata
+    
+            //   // cardsRef.current?.update(result[0]);
+            //   // chartRef.current?.update(result[0]);
+            //   // aqiRef.current?.update(result[0]);
+            // }
+          } catch (err) {
+            console.error("Error fetching IoT data:", err);
+          }
+        };
+    
+        fetchIoTData();
+        const interval = setInterval(fetchIoTData, 5000);
+    
+        return () => clearInterval(interval);
+      }, [data]);
+  
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="flex flex-col border border-black h-[98vh] min-h-0 overflow-hidden">
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />        
           </div>
         </header>
-        <div className="flex flex-1 flex-col p-4 pt-0 h-screen overflow-hidden">
+        <div className="flex border border-black flex-1 flex-col p-4 pt-0 h-screen overflow-hidden">
   {/* Parent Container: Forces a 3x3 grid that fills 100% of the remaining height */}
   <div className="grid grid-cols-3 grid-rows-3 gap-4 h-full min-h-0">
     
@@ -30,37 +97,37 @@ export default function Dashboard() {
     {/* Card 2: Temperature */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Temperature</p>
-      <h2 className="text-2xl font-bold">25.13°C</h2>
+      <h2 className="text-2xl font-bold">{res.temperature}</h2>
     </div>
 
     {/* Card 3: Humidity */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Humidity</p>
-      <h2 className="text-2xl font-bold">55.8%</h2>
+      <h2 className="text-2xl font-bold">{res.humidity}</h2>
     </div>
 
     {/* Card 4: Vibration (Structural Health) */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Structural Vibration</p>
-      <h2 className="text-2xl font-bold">0.611 <span className="text-xs">Hz</span></h2>
+      <h2 className="text-2xl font-bold">{res.vibration} <span className="text-xs">Hz</span></h2>
     </div>
 
     {/* Card 5: Visitor Count */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Current Visitors</p>
-      <h2 className="text-2xl font-bold">203</h2>
+      <h2 className="text-2xl font-bold">{res.visitor_count}</h2>
     </div>
 
     {/* Card 6: Air Quality Index */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">AQI Status</p>
-      <h2 className="text-2xl font-bold text-yellow-500">64</h2>
+      <h2 className="text-2xl font-bold text-yellow-500">{res.aqi}</h2>
     </div>
 
     {/* Card 7: Rainfall */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Rainfall</p>
-      <h2 className="text-2xl font-bold">9.18 <span className="text-xs text-muted-foreground">mm</span></h2>
+      <h2 className="text-2xl font-bold">{res.humidity} <span className="text-xs text-muted-foreground">mm</span></h2>
     </div>
 
     {/* Card 8: Device Information */}
@@ -72,7 +139,7 @@ export default function Dashboard() {
     {/* Card 9: Last Heartbeat */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Last Update</p>
-      <p className="text-xs font-mono">2026-02-28 11:48:35</p>
+      <p className="text-xs font-mono">{res.timestamp}</p>
     </div>
 
   </div>

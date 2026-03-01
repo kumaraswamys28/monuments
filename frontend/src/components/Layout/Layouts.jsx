@@ -15,7 +15,6 @@ import AqiChart from "./AQI";
 export default function Layouts() {
   const { id } = useParams();
   const [data, setdata] = useState([]);
-  // const [res,setRes]=useState([]);
   const cardsRef = useRef();
   const chartRef = useRef();
   const aqiRef = useRef();
@@ -56,17 +55,7 @@ export default function Layouts() {
         const result = await response.json();
 
         if (Array.isArray(result) && result.length > 0) {
-          // const latest = result[0]
-
-          // setRes({
-          //   vibration: latest.vibration,
-          //   temperature: latest.temperature,
-          //   aqi: latest.aqi,
-          //   visitor_count: latest.visitor_count,
-          //   rainfall: latest.rainfall,
-          //   humidity: latest.humidity,
-          // })
-          console.log(result[0], "log 000000000000000000000000");
+          
 
           cardsRef.current?.update(result[0]);
           chartRef.current?.update(result[0]);
@@ -86,26 +75,7 @@ export default function Layouts() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      {/* <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator
-              orientation="vertical"
-              className="mr-2 data-[orientation=vertical]:h-4"
-            />
-         
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          
-          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" ><Renderer data={data} res={res}/></div>
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-          </div>
-        </div> */}
+     
       <SidebarInset className="flex flex-col border border-black h-[98vh] min-h-0 overflow-hidden">
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-1 px-2">
@@ -117,17 +87,21 @@ export default function Layouts() {
           </div>
         </header>
 
-        <div className="flex flex-1 p-2 gap-4 min-h-0 overflow-hidden">
-          <div className="flex-1 bg-muted/50 rounded-xl overflow-hidden">
-            <Renderer data={data} />
-          </div>
+        <div className="flex flex-col md:flex-row flex-1 p-2 md:p-4 gap-4 min-h-0 overflow-auto md:overflow-hidden">
+  
+  {/* Main Content: Full width on mobile, flexible on desktop */}
+  <div className="flex-1 bg-muted/50 rounded-xl overflow-hidden min-h-[300px] md:min-h-0">
+    <Renderer data={data} />
+  </div>
 
-          <div className="w-[30%] min-w-[280px] flex flex-col gap-4 min-h-0">
-            <Cards ref={cardsRef} />
-            <ClimateChart ref={chartRef} />
-            <AqiChart ref={aqiRef} />
-          </div>
-        </div>
+  {/* Sidebar: Full width on mobile, 30% width on desktop */}
+  <div className="w-full md:w-[30%] md:min-w-[280px] flex flex-col gap-4">
+    <Cards ref={cardsRef} />
+    <ClimateChart ref={chartRef} />
+    <AqiChart ref={aqiRef} />
+  </div>
+
+</div>
       </SidebarInset>
     </SidebarProvider>
   );
