@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
+import Tempcard from "./cards/Tempcard";
 // import { Outlet } from "react-router-dom"
 
 
@@ -76,10 +77,7 @@ export default function Dashboard() {
     </div>
 
     {/* Card 2: Temperature */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Temperature</p>
-      <h2 className="text-2xl font-bold">{res.temperature}</h2>
-    </div>
+    <Tempcard res={res.temperature}/>
 
     {/* Card 3: Humidity */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
