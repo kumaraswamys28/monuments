@@ -14,6 +14,7 @@ import Visitorcard from "./cards/Visitor";
 import AQIcard from "./cards/AQI";
 import Rainfallcard from "./cards/Rain";
 import DeviceIDcard from "./cards/Device";
+import Renderer from "../../Rendering/Renderer";
 // import { Outlet } from "react-router-dom"
 
 
@@ -21,17 +22,25 @@ export default function Dashboard() {
   const { id } = useParams();
   const [data, setdata] = useState(null);
   const [res, setRes] = useState({}); // Initialize as object
-         useEffect(() => {
+  useEffect(() => {
+      
     if (!id) return;
+
     const fetchModel = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/models/${id}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/api/models/${id}`,
+        );
         const model = await response.json();
+
+        console.log(model);
+
         setdata(model);
       } catch (err) {
         console.error("Failed to fetch model:", err);
       }
     };
+
     fetchModel();
   }, [id]);
 
@@ -78,8 +87,7 @@ export default function Dashboard() {
     
     {/* Card 1: Hampi Chariot / Monument Image */}
     <div className="bg-muted/50 rounded-xl border border-primary/10 flex flex-col items-center justify-center border border-blue-500 p-2">
-       <span className="text-xs opacity-50 uppercase tracking-widest">Live View</span>
-    </div>
+{data && <Renderer data={data} />}    </div>
     <Tempcard res={res.temperature}/>
 
 <Humiditycard res={res.humidity}/>
