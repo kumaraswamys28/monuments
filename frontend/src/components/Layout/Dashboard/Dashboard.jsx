@@ -8,6 +8,12 @@ import {
 import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import Tempcard from "./cards/Tempcard";
+import Humiditycard from "./cards/Humid";
+import Vibrationcard from "./cards/Vibration";
+import Visitorcard from "./cards/Visitor";
+import AQIcard from "./cards/AQI";
+import Rainfallcard from "./cards/Rain";
+import DeviceIDcard from "./cards/Device";
 // import { Outlet } from "react-router-dom"
 
 
@@ -73,49 +79,19 @@ export default function Dashboard() {
     {/* Card 1: Hampi Chariot / Monument Image */}
     <div className="bg-muted/50 rounded-xl border border-primary/10 flex flex-col items-center justify-center border border-blue-500 p-2">
        <span className="text-xs opacity-50 uppercase tracking-widest">Live View</span>
-       {/* Your Image or Canvas goes here */}
     </div>
-
-    {/* Card 2: Temperature */}
     <Tempcard res={res.temperature}/>
 
-    {/* Card 3: Humidity */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Humidity</p>
-      <h2 className="text-2xl font-bold">{res.humidity}</h2>
-    </div>
+<Humiditycard res={res.humidity}/>
+  <Vibrationcard res={res.vibration}/>
+    <Visitorcard res={res.visitor_count} />
 
-    {/* Card 4: Vibration (Structural Health) */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Structural Vibration</p>
-      <h2 className="text-2xl font-bold">{res.vibration} <span className="text-xs">Hz</span></h2>
-    </div>
+   <AQIcard res={res.aqi} />
 
-    {/* Card 5: Visitor Count */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Current Visitors</p>
-      <h2 className="text-2xl font-bold">{res.visitor_count}</h2>
-    </div>
+   <Rainfallcard res={res.rainfall}/>
 
-    {/* Card 6: Air Quality Index */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">AQI Status</p>
-      <h2 className="text-2xl font-bold text-yellow-500">{res.aqi}</h2>
-    </div>
+    <DeviceIDcard res={res.device_id}/>
 
-    {/* Card 7: Rainfall */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Rainfall</p>
-      <h2 className="text-2xl font-bold">{res.humidity} <span className="text-xs text-muted-foreground">mm</span></h2>
-    </div>
-
-    {/* Card 8: Device Information */}
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Device ID</p>
-      <code className="text-xs font-mono text-primary">SIM_DEVICE_01</code>
-    </div>
-
-    {/* Card 9: Last Heartbeat */}
     <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
       <p className="text-sm text-muted-foreground">Last Update</p>
       <p className="text-xs font-mono">{res.timestamp}</p>
