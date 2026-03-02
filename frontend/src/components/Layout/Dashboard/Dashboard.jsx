@@ -11,69 +11,50 @@ import { useParams } from "react-router-dom";
 
 
 export default function Dashboard() {
-          const { id } = useParams();
-
-    // const chartRef = useRef();
-      const [data, setdata] = useState([]);
-      const [res,setRes]=useState([]);
-console.log(res);
-
-      useEffect(() => {
+  const { id } = useParams();
+  const [data, setdata] = useState(null);
+  const [res, setRes] = useState({}); // Initialize as object
+         useEffect(() => {
     if (!id) return;
-
     const fetchModel = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/api/models/${id}`,
-        );
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/models/${id}`);
         const model = await response.json();
-
-        console.log(model);
-
         setdata(model);
       } catch (err) {
         console.error("Failed to fetch model:", err);
       }
     };
-
     fetchModel();
   }, [id]);
-    
 
-      useEffect(() => {
-        if (!data?.iot_data || !data?.api_key) return;
-    
-        const fetchIoTData = async () => {
-          try {
-            const response = await fetch(data.iot_data, {
-              headers: {
-                apikey: data.api_key,
-                Authorization: `Bearer ${data.api_key}`,
-              },
-            });
-    
-            const result = await response.json();
-            console.log(result);
-            setRes(result)
-    
-            // if (Array.isArray(result) && result.length > 0) {
-              
-            //   setdata
-    
-            //   // cardsRef.current?.update(result[0]);
-            //   // chartRef.current?.update(result[0]);
-            //   // aqiRef.current?.update(result[0]);
-            // }
-          } catch (err) {
-            console.error("Error fetching IoT data:", err);
-          }
-        };
-    
-        fetchIoTData();
-        const interval = setInterval(fetchIoTData, 5000);
-    
-        return () => clearInterval(interval);
-      }, [data]);
+  useEffect(() => {
+    if (!data?.iot_data || !data?.api_key) return;
+
+    const fetchIoTData = async () => {
+      try {
+        const response = await fetch(data.iot_data, {
+          headers: {
+            apikey: data.api_key,
+            Authorization: `Bearer ${data.api_key}`,
+          },
+        });
+
+        const result = await response.json();
+        
+        // Handle both Array and Single Object responses
+        const latestData = Array.isArray(result) ? result[0] : result;
+        setRes(latestData || {}); 
+        
+      } catch (err) {
+        console.error("Error fetching IoT data:", err);
+      }
+    };
+
+    fetchIoTData();
+    const interval = setInterval(fetchIoTData, 1000);
+    return () => clearInterval(interval);
+  }, [data]);
   
   return (
     <SidebarProvider>
@@ -84,7 +65,7 @@ console.log(res);
             <SidebarTrigger className="-ml-1" />        
           </div>
         </header>
-        <div className="flex border border-black flex-1 flex-col p-4 pt-0 h-screen overflow-hidden">
+        <div className="flex  flex-1 flex-col p-4 pt-0 h-screen overflow-hidden">
   {/* Parent Container: Forces a 3x3 grid that fills 100% of the remaining height */}
   <div className="grid grid-cols-3 grid-rows-3 gap-4 h-full min-h-0">
     
