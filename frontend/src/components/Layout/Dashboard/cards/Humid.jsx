@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 
-function Humiditycard({ res = 58.16 }) {
+function Humiditycard({ res = 0 }) {
   const [min, setMin] = useState(res);
   const [max, setMax] = useState(res);
   const [prevRes, setPrevRes] = useState(res);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Visitorcard({ res = 242, capacity = 500 }) {
+function Visitorcard({ res = 0, capacity = 500 }) {
   const [min, setMin] = useState(res);
   const [max, setMax] = useState(res);
   const [prevRes, setPrevRes] = useState(res);

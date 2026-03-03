@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Rainfallcard({ res = 57.04 }) {
+function Rainfallcard({ res = 0 }) {
   const [min, setMin] = useState(res);
   const [max, setMax] = useState(res);
   const [prevRes, setPrevRes] = useState(res);

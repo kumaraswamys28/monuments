@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { cacheModel, getCachedModel } from '../../lib/DB';
+
 
 export default function ChunkedModel({ url }) {
   const [scene, setScene] = useState(null);
@@ -7,6 +9,9 @@ export default function ChunkedModel({ url }) {
   const group = useRef();
 
   useEffect(() => {
+      if (!url) return;
+
+
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -26,7 +31,7 @@ export default function ChunkedModel({ url }) {
             materials.forEach((mat) => {
               // Iterate over all properties of the material to find textures
               for (const key in mat) {
-                if (mat[key] && mat[key].isTexture) {
+                if (mat[key]?.isTexture) {
                   mat[key].dispose();
                 }
               }
@@ -37,70 +42,89 @@ export default function ChunkedModel({ url }) {
       });
     };
 
-    async function loadLargeModel() {
-      try {
-        // Reset current model state and clean up previous memory
-        setScene((prev) => {
-          if (prev) disposeScene(prev);
-          return null;
-        });
-        setProgress(0);
 
-        const response = await fetch(url, { signal });
-        if (!response.body) return;
-
-        const reader = response.body.getReader();
-        const contentLength = +response.headers.get('Content-Length') || 0;
-
-        let receivedLength = 0;
-        let chunks = [];
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          chunks.push(value);
-          receivedLength += value.length;
-          
-          if (contentLength) {
-            setProgress(Math.round((receivedLength / contentLength) * 100));
-          }
-        }
-
-        let allChunks = new Uint8Array(receivedLength);
-        let position = 0;
-        for (let chunk of chunks) {
-          allChunks.set(chunk, position);
-          position += chunk.length;
-        }
-
-        chunks = [];
-
-        const loader = new GLTFLoader();
-        loader.parse(allChunks.buffer, '', (gltf) => {
-          if (!signal.aborted) {
-            setScene(gltf.scene);
-          } else {
-            disposeScene(gltf.scene);
-          }
-          
-          allChunks = null;
-        });
-
-      } catch (err) {
-        if (err.name === 'AbortError') {
-          console.log('Model load cancelled for:', url);
+    const parseModel = (buffer) => {
+      const loader = new GLTFLoader();
+            loader.parse(buffer, '', (gltf) => {
+        if (!signal.aborted) {
+          setScene(gltf.scene);
         } else {
-          console.error("Critical model load error:", err);
+          disposeScene(gltf.scene);
+        }
+      });
+    };
+
+
+   
+      const loadLargeModel = async () => {
+      setScene((prev) => {
+        if (prev) disposeScene(prev);
+        return null;
+      });
+      setProgress(0);
+
+      const response = await fetch(url, { signal });
+      if (!response.body) return;
+
+      const reader = response.body.getReader();
+      const contentLength =
+        Number(response.headers.get('Content-Length')) || 0;
+
+      let receivedLength = 0;
+      const chunks = [];
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        chunks.push(value);
+        receivedLength += value.length;
+
+        if (contentLength) {
+          setProgress(
+            Math.round((receivedLength / contentLength) * 100)
+          );
         }
       }
-    }
 
-    if (url) {
-      loadLargeModel();
-    }
+      const buffer = new Uint8Array(receivedLength);
+      let offset = 0;
 
-    // Cleanup: When the component updates (new URL) or unmounts
+      for (const chunk of chunks) {
+        buffer.set(chunk, offset);
+        offset += chunk.length;
+      }
+
+      if (!signal.aborted) {
+        await cacheModel(url, buffer.buffer);
+        parseModel(buffer.buffer);
+      }
+    };
+
+
+    /* ---------- Main Flow ---------- */
+     (async () => {
+      try {
+        const cached = await getCachedModel(url);
+
+        if (cached && !signal.aborted) {
+          console.log('Loaded model from IndexedDB');
+          parseModel(cached);
+          return;
+        }
+
+        console.log('Fetching model from network');
+        await loadLargeModel();
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          console.log('Model load aborted');
+        } else {
+          console.error('Model load failed:', err);
+        }
+      }
+    })();
+
+    /* ---------- Cleanup ---------- */
     return () => {
       controller.abort();
       setScene((prev) => {
@@ -115,7 +139,7 @@ export default function ChunkedModel({ url }) {
     return (
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#888" wireframe />
+        <meshStandardMaterial wireframe color="#888" />
       </mesh>
     );
   }
@@ -123,7 +147,7 @@ export default function ChunkedModel({ url }) {
   return (
 
     <group ref={group}>
-      <primitive object={scene}/>
+      <primitive object={scene} />
     </group>
 
 

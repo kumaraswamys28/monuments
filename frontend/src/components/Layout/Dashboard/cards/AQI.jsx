@@ -17,7 +17,7 @@ const SEGMENTS = [
 ];
 const AQI_MAX = 300;
 
-function AQIcard({ res = 167 }) {
+function AQIcard({ res = 0 }) {
   const [min, setMin] = useState(res);
   const [max, setMax] = useState(res);
   const [prevRes, setPrevRes] = useState(res);

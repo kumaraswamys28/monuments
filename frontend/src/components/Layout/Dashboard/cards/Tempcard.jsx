@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GaugeComponent from "react-gauge-component";
 
-function Tempcard({ res = 34.26 }) {
+function Tempcard({ res = 0 }) {
   const [min, setMin] = useState(res);
   const [max, setMax] = useState(res);
   const [prevRes, setPrevRes] = useState(res);

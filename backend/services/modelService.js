@@ -57,8 +57,8 @@ const modelsData = [
       ],
   },{
     id: 3,
-    // url: "/temp.glb",
-        url: "/polee.glb",
+    url: "/temp.glb",
+        // url: "/polee.glb",
 
     title:"temple",
     transform: { position: [0, 0, 0], rotation: [0, 180, 0], scale: 1.5 },

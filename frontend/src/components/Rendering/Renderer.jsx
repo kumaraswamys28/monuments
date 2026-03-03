@@ -128,7 +128,7 @@ const containerRef = useRef(null);
         <directionalLight position={[5, 5, 5]} intensity={0} />
 
        <Suspense fallback={null}>
-        <CustomSkybox url="/360.jpg" />
+        {/* <CustomSkybox url="/360.jpg" /> */}
          {/* <Environment 
             files="/360.jpg" // Or use a preset like "sunset", "city", "park"
             background // This makes it a 360 sky
