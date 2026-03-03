@@ -13,10 +13,10 @@ const modelsData = [
           title: "dashboard",
           url: "#",
         },
-        // {
-        //   title: "Team",
-        //   url: "#",
-        // },
+         {
+          title: "analytics",
+          url: "#",
+        },
         // {
         //   title: "Billing",
         //   url: "#",
@@ -29,7 +29,8 @@ const modelsData = [
   },
     {
     id: 2,
-    url: "/temple.glb",
+
+   url: "/temple.glb",
     title:"pole",
     transform: { position: [0, 0, 0], rotation: [500, 60, 40], scale: 1.5 },
     iot_data:
@@ -41,10 +42,10 @@ const modelsData = [
           title: "dashboard",
           url: "#",
         },
-        // {
-        //   title: "Team",
-        //   url: "#",
-        // },
+        {
+          title: "analytics",
+          url: "#",
+        },
         // {
         //   title: "Billing22",
         //   url: "#",
@@ -56,7 +57,9 @@ const modelsData = [
       ],
   },{
     id: 3,
-    url: "/temp.glb",
+    // url: "/temp.glb",
+        url: "/polee.glb",
+
     title:"temple",
     transform: { position: [0, 0, 0], rotation: [0, 180, 0], scale: 1.5 },
     iot_data:
@@ -68,10 +71,10 @@ const modelsData = [
           title: "dashboard",
           url: "#",
         },
-        // {
-        //   title: "Team222",
-        //   url: "#",
-        // },
+      {
+          title: "analytics",
+          url: "#",
+        },
         // {
         //   title: "Billing22",
         //   url: "#",

@@ -45,7 +45,8 @@ export function AppSidebar({ ...props }) {
           title: model.title,
           url: `/model/${model.id}`,
           icon: index % 2 === 0 ? Sun : BookOpen,
-          isActive: index === 0,
+          // isActive: index === 0,
+          isActive: true,
           items: model.items.map((item) => {
             const pathSegment =
               item.url !== "#"
@@ -82,7 +83,7 @@ export function AppSidebar({ ...props }) {
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left text-lg leading-tight">
+                <div className="grid flex-1 text-left text-2xl leading-tight">
                   <span className="truncate font-medium">RVCE</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
