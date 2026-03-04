@@ -31,7 +31,7 @@ export function NavMain({
               <SidebarMenuButton asChild tooltip={item.title}>
                 <Link to={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span className="text-xl">{item.title}</span>
                 </Link>
               </SidebarMenuButton>
               {item.items?.length ? (
@@ -48,7 +48,7 @@ export function NavMain({
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
                             <Link to={subItem.url}>
-                              <span>{subItem.title}</span>
+                              <span className="text-lg px-2">{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
