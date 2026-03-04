@@ -18,7 +18,7 @@ function App() {
         <Route path="/model/:id/dashboard" element={<Dashboard />}/>
         <Route path="/*" element={<EmptyInputGroup />} />
         <Route path="/" element={<Home/>} />
-        <Route path="//model/:id/analytics" element={<Analytics/>} />
+        <Route path="/model/:id/analytics" element={<Analytics/>} />
       </Routes>
     </Router>
   );

@@ -12,7 +12,7 @@ import { Maximize, Minimize,MapPin } from "lucide-react"; // Optional: for nice 
 
 
 import ChunkedModel from "./Chunked";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { AxesHelper } from "three";
 
 const DataPin = ({ position, label, value, unit }) => {
@@ -60,6 +60,8 @@ const DataPin = ({ position, label, value, unit }) => {
 
 
 const Renderer = React.memo(({ data }) =>{
+    const isAnalytics = useMatch("/model/:id/analytics");
+
 const containerRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   
@@ -170,8 +172,9 @@ const containerRef = useRef(null);
           pointerEvents: "none",
         }}
       >
-        <h1 className="majestic-title ">{data.title}</h1>
-      </div>
+ {!isAnalytics && (
+        <h1 className="majestic-title">{data.title}</h1>
+      )}      </div>
       
     </div>
   );

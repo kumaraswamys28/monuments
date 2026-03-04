@@ -113,7 +113,7 @@ export default function LeftPanel({ res, data }) {
         }
         .lp-time {
           font-family: 'DM Mono', monospace;
-          font-size: 10px;
+          font-size: 12px;
           color: #3f4540;
           margin-top: 1px;
         }

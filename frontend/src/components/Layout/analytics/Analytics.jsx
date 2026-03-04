@@ -7,6 +7,9 @@ import {
 import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import LeftPanel from "./LeftPanel";
+import RightPanel from "./RightPanel.jsx";
+import Renderer from "../../Rendering/Renderer.jsx";
+
 
 
 export default function Analytics() {
@@ -49,9 +52,18 @@ export default function Analytics() {
 
         const result = await response.json();
         
-        // Handle both Array and Single Object responses
         const latestData = Array.isArray(result) ? result[0] : result;
-        setRes(latestData || {}); 
+                setRes(latestData || {})
+
+//         setRes({ device_id: 'SIM_DEVICE_01',
+//   temperature: 34.5,
+//   humidity: 52.56,
+//   vibration: 0.232,
+//   visitor_count: 177,
+//   aqi: 40,
+//   rainfall: 7.48,
+//   timestamp: new Date()
+// }); 
         
       } catch (err) {
         console.error("Error fetching IoT data:", err);
@@ -87,12 +99,13 @@ export default function Analytics() {
 
   {/* Center panel - 60% */}
   <div className="w-[60%] h-full bg-yellow-100 ">
-    Center Panel
+    {data &&     <Renderer data={data} />}
   </div>
 
   {/* Right panel - 20% */}
   <div className="w-[20%] h-full bg-purple-200 rounded-r-xl">
-    Right Panel
+    {data && <RightPanel res={res} />}
+
   </div>
 
 </div>
