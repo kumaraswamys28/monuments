@@ -34,7 +34,7 @@ function generateFakeData() {
     ),
 
     aqi: Math.floor(
-      40 + Math.random() * 150
+      40 + Math.random() * 1
     ),
 
     rainfall: Number(

@@ -14,6 +14,7 @@ import Visitorcard from "./cards/Visitor";
 import AQIcard from "./cards/AQI";
 import Rainfallcard from "./cards/Rain";
 import DeviceIDcard from "./cards/Device";
+import LastUpdateCard from "./cards/LastUpdateCard.jsx"
 import Renderer from "../../Rendering/Renderer";
 // import { Outlet } from "react-router-dom"
 
@@ -100,10 +101,7 @@ export default function Dashboard() {
 
     <DeviceIDcard res={res.device_id}/>
 
-    <div className="bg-muted/50 rounded-xl p-4 flex flex-col justify-center border border-blue-500">
-      <p className="text-sm text-muted-foreground">Last Update</p>
-      <p className="text-xs font-mono">{res.timestamp}</p>
-    </div>
+    <LastUpdateCard timestamp={res.timestamp}/>
 
   </div>
 </div>

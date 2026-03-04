@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:all": "concurrently \"npm run dev --prefix frontend\" \"npm run start --prefix backend\" \"node iot/index.js\""
+    "dev:all": "concurrently \"npm run dev --prefix frontend\" \"npm run start --prefix backend\" \"node iot/index.js\"",
+ "devs": "concurrently \"npm run dev --prefix frontend\" \"npm run start --prefix backend\""
+
   },
   "repository": {
     "type": "git",

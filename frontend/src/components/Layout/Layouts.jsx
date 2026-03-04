@@ -98,7 +98,7 @@ export default function Layouts() {
   <div className="w-full md:w-[30%] md:min-w-[280px] flex flex-col gap-4">
     <Cards ref={cardsRef} />
     <ClimateChart ref={chartRef} />
-    <AqiChart ref={aqiRef} />
+    <AqiChart  ref={aqiRef} />
   </div>
 
 </div>

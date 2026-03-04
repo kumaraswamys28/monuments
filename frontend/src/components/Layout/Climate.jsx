@@ -1,202 +1,288 @@
 import React, { useImperativeHandle, forwardRef, useState } from "react";
-import { TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const ClimateChart = forwardRef((props, ref) => {
-  // We keep a local history of data for the chart
-  const [history, setHistory] = useState([]);
-  const historyLimit = 10; // Number of data points to show
+const chartConfig = {
+  temperature: { label: "Temperature", color: "#ef4444" },
+  humidity:    { label: "Humidity",    color: "#3b82f6" },
+};
 
-  const chartConfig = {
-    temperature: {
-      label: "Temperature",
-      color: "hsl(var(--chart-1))",
-    },
-    humidity: {
-      label: "Humidity",
-      color: "hsl(var(--chart-2))",
-    },
-  };
+const ClimateChart = forwardRef((props, ref) => {
+  const [history, setHistory] = useState([]);
 
   useImperativeHandle(ref, () => ({
     update: (newData) => {
       if (!newData) return;
-
       setHistory((prev) => {
         const timestamp = new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
+          hour: "2-digit", minute: "2-digit", second: "2-digit",
         });
-
-        const newPoint = {
+        return [...prev, {
           time: timestamp,
           temperature: newData.temperature,
           humidity: newData.humidity,
-        };
-
-        const updatedHistory = [...prev, newPoint];
-        // Keep only the last N points to prevent memory leaks
-        return updatedHistory.slice(-historyLimit);
+        }].slice(-10);
       });
     },
   }));
 
+  const latest = history[history.length - 1];
+
   return (
-    //  <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" >
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
 
-    //     <Card className="bg-muted/50 border-none shadow-none">
-    //       <CardHeader className="p-4 pb-2">
-    //         <CardTitle className="text-sm font-bold">Climate Analysis</CardTitle>
-    //         <CardDescription className="text-xs">
-    //           Real-time Temperature vs Humidity
-    //         </CardDescription>
-    //       </CardHeader>
-    //       <CardContent className="p-2">
-    //         <ChartContainer config={chartConfig} className="h-[200px] w-full">
-    //           <AreaChart
-    //             data={history}
-    //             margin={{ left: -20, right: 12, top: 10 }}
-    //           >
-    //             <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.3} />
-    //             <XAxis
-    //               dataKey="time"
-    //               tickLine={false}
-    //               axisLine={false}
-    //               tickMargin={8}
-    //               fontSize={10}
-    //               hide={history.length < 2}
-    //             />
-    //             <YAxis
-    //               tickLine={false}
-    //               axisLine={false}
-    //               tickMargin={8}
-    //               fontSize={10}
-    //               domain={[0, 100]}
-    //             />
-    //             <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
-    //             <Area
-    //               dataKey="humidity"
-    //               type="monotone"
-    //               fill="var(--chart-2)"
-    //               fillOpacity={0.2}
-    //               stroke="var(--chart-2)"
-    //               stackId="a"
-    //               isAnimationActive={false} // Disable animation for better performance
-    //             />
-    //             <Area
-    //               dataKey="temperature"
-    //               type="monotone"
-    //               fill="var(--chart-1)"
-    //               fillOpacity={0.4}
-    //               stroke="var(--chart-1)"
-    //               stackId="a"
-    //               isAnimationActive={false}
-    //             />
-    //           </AreaChart>
-    //         </ChartContainer>
-    //       </CardContent>
-    //       <CardFooter className="p-4 pt-0">
-    //         <div className="flex items-center gap-2 text-xs font-medium leading-none">
-    //           Live Sensor Sync <TrendingUp className="h-3 w-3 text-green-500" />
-    //         </div>
-    //       </CardFooter>
-    //     </Card>
-    //     </div>
+        .cc-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #ffffff;
+          border: 1px solid blue;
+          border-radius: 12px;
+          padding: 14px 16px 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          min-height: 0;
+          flex: 1;
+          overflow: hidden;
+        }
 
-    <div className="bg-muted/50 flex-1 border border-blue-500 rounded-xl overflow-hidden flex flex-col min-h-0">
-      <Card className="bg-transparent border-none shadow-none flex flex-col h-full min-h-0">
-        <CardHeader className=" mt-[-15px] mb-0">
-  <div className="flex items-center justify-between">
-    {/* Left side */}
-    <div>
-      <CardTitle className="text-lg font-bold leading-none">
-        Climate Analysis
-      </CardTitle>
-      <CardDescription className="text-sm font-medium">
-        Real-time Temperature vs Humidity
-      </CardDescription>
-    </div>
+        .cc-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-shrink: 0;
+        }
 
-    {/* Right side */}
-    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-      Live Sync
-      <TrendingUp className="h-4 w-4 text-green-500" />
-    </div>
-  </div>
-</CardHeader>
+        .cc-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #0f172a;
+          line-height: 1.2;
+        }
 
-        <CardContent className="mt-[-25px] mb-[-10px] flex-1 min-h-0">
-          <ChartContainer config={chartConfig} className="h-full p-0.5 w-full">
-            <AreaChart 
-              data={history}
-              // Removed top margin to kill the white space
-              margin={{ left: -15, right: 15, top: 0, bottom: 0 }}
-            >
-              <CartesianGrid
-                vertical={false}
-                strokeDasharray="3 3"
-                opacity={0.2}
-              />
-              <XAxis
-                dataKey="time"
-                tickLine={false}
-              axisLine={false}
-                fontSize={12} // Increased font size
-                tickMargin={10}
-                hide={history.length < 2}
-              />
-              <YAxis
-                tickLine={true}
-                axisLine={true}
-                fontSize={12}
-                tickMargin={10}
-                // Define exactly which numbers to show
-                ticks={[0, 25, 50, 75]}
-                // Force the chart to start and end exactly at these points
-                domain={[0, 125]}
-                interval={0}
-              />
-              <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
-              <Area
-                dataKey="humidity"
-                type="monotone"
-                fill="var(--chart-2)"
-                fillOpacity={0.3}
-                stroke="var(--chart-2)"
-                strokeWidth={2}
-                isAnimationActive={false}
-              />
-              <Area
-                dataKey="temperature"
-                type="monotone"
-                fill="var(--chart-1)"
-                fillOpacity={0.5}
-                stroke="var(--chart-1)"
-                strokeWidth={2}
-                isAnimationActive={false}
-              />
-            </AreaChart>
-          </ChartContainer>
-        </CardContent>
+        .cc-subtitle {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 1px;
+          color: #94a3b8;
+          text-transform: uppercase;
+          margin-top: 2px;
+        }
 
-        
-          
-      </Card>
-    </div>
+        .cc-live {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          color: #10b981;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+
+        .cc-live-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #10b981;
+          animation: cc-blink 1.5s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+
+        @keyframes cc-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+
+        .cc-divider {
+          height: 1px;
+          background: #f1f5f9;
+          flex-shrink: 0;
+        }
+
+        .cc-stats {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          flex-shrink: 0;
+        }
+
+        .cc-stat-sep {
+          width: 1px;
+          height: 28px;
+          background: #f1f5f9;
+          flex-shrink: 0;
+        }
+
+        .cc-stat-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin-bottom: 1px;
+        }
+
+        .cc-stat-val {
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .cc-chart {
+          flex: 1;
+          min-height: 0;
+        }
+
+        .cc-empty {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          letter-spacing: 1px;
+          color: #cbd5e1;
+          text-transform: uppercase;
+        }
+
+        .cc-legend {
+          display: flex;
+          gap: 14px;
+          flex-shrink: 0;
+        }
+
+        .cc-legend-item {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          color: #64748b;
+        }
+
+        .cc-legend-dot {
+          width: 10px;
+          height: 3px;
+          border-radius: 2px;
+        }
+      `}</style>
+
+      <div className="cc-root">
+        {/* Header */}
+        <div className="cc-header">
+          <div>
+            <div className="cc-title">Climate Analysis</div>
+            <div className="cc-subtitle">Temp vs Humidity · Real-time</div>
+          </div>
+          <div className="cc-live">
+            <div className="cc-live-dot" />
+            Live
+          </div>
+        </div>
+
+        <div className="cc-divider" />
+
+        {/* Current values */}
+        <div className="cc-stats">
+          <div>
+            <div className="cc-stat-label" style={{ color: "#ef4444" }}>Temp</div>
+            <div className="cc-stat-val" style={{ color: "#ef4444" }}>
+              {latest?.temperature != null ? `${latest.temperature}°` : "—"}
+            </div>
+          </div>
+          <div className="cc-stat-sep" />
+          <div>
+            <div className="cc-stat-label" style={{ color: "#3b82f6" }}>Humidity</div>
+            <div className="cc-stat-val" style={{ color: "#3b82f6" }}>
+              {latest?.humidity != null ? `${latest.humidity}%` : "—"}
+            </div>
+          </div>
+        </div>
+
+        {/* Chart */}
+        {history.length < 2 ? (
+          <div className="cc-empty">Collecting data...</div>
+        ) : (
+          <div className="cc-chart">
+            <ChartContainer config={chartConfig} className="h-full w-full">
+              <AreaChart data={history} margin={{ left: -10, right: 8, top: 4, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="tempGradFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%"  stopColor="#ef4444" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0}   />
+                  </linearGradient>
+                  <linearGradient id="humGradFill2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%"  stopColor="#3b82f6" stopOpacity={0.15} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}    />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis
+                  dataKey="time"
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fontSize: 8, fontFamily: "DM Mono, monospace", fill: "#94a3b8" }}
+                  tickMargin={1}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fontSize: 8, fontFamily: "DM Mono, monospace", fill: "#94a3b8" }}
+                  tickMargin={4}
+                  domain={[0, 100]}
+                  tickCount={5}
+                />
+                <ChartTooltip
+                  cursor={{ stroke: "#e2e8f0", strokeWidth: 1 }}
+                  content={<ChartTooltipContent />}
+                />
+                <Area
+                  dataKey="humidity"
+                  type="monotone"
+                  fill="url(#humGradFill2)"
+                  stroke="#3b82f6"
+                  strokeWidth={1.5}
+                  dot={false}
+                  activeDot={{ r: 3, fill: "#3b82f6", strokeWidth: 0 }}
+                  isAnimationActive={false}
+                />
+                <Area
+                  dataKey="temperature"
+                  type="monotone"
+                  fill="url(#tempGradFill)"
+                  stroke="#ef4444"
+                  strokeWidth={1.5}
+                  dot={false}
+                  activeDot={{ r: 3, fill: "#ef4444", strokeWidth: 0 }}
+                  isAnimationActive={false}
+                />
+              </AreaChart>
+            </ChartContainer>
+          </div>
+        )}
+
+        {/* Legend */}
+        <div className="cc-legend">
+          <div className="cc-legend-item">
+            <div className="cc-legend-dot" style={{ background: "#ef4444" }} />
+            Temp °C
+          </div>
+          <div className="cc-legend-item">
+            <div className="cc-legend-dot" style={{ background: "#3b82f6" }} />
+            Humidity %
+          </div>
+        </div>
+      </div>
+    </>
   );
 });
 

@@ -1,280 +1,242 @@
-// import {
-//   Table,
-//   TableBody,
-//   TableCaption,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table"
-
-// function Cards({data}) {
-// const labelConfig = {
-//     aqi: { label: "AQI", unit: "" },
-//     humidity: { label: "Humidity", unit: "%" },
-//     rainfall: { label: "Rainfall", unit: " mm" },
-//     temperature: { label: "Temperature", unit: "°C" },
-//     vibration: { label: "Vibration", unit: " Hz" },
-//     visitor_count: { label: "Visitor Count", unit: "" },
-//   };    
-//   return (
-//       <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden" >
-//      <Table>
-//   <TableCaption>Telemetric Data From IOT Devices</TableCaption>
-//   <TableHeader>
-//     <TableRow>
-//       {/* Added pl-6 for left spacing */}
-//       <TableHead className="w-[150px] pl-6">Parameters</TableHead> 
-//       {/* Added pr-6 for right spacing */}
-//       <TableHead className="text-right pr-6">Values</TableHead>
-//     </TableRow>
-//   </TableHeader>
-//   <TableBody>
-//     {data && Object.entries(data).map(([key, value]) => (
-//       <TableRow key={key}>
-//         {/* Added pl-6 to match the header */}
-//         <TableCell className="font-medium capitalize pl-6">
-//           {labelConfig[key]?.label || key.replace("_", " ")}
-//         </TableCell>
-//         {/* Added pr-6 to match the header */}
-//         <TableCell className="text-right pr-6">
-//           {value}
-//           {labelConfig[key]?.unit || ""}
-//         </TableCell>
-//       </TableRow>
-//     ))}
-//   </TableBody>
-// </Table>
-//     </div>
-//   )
-// }
-
-// export default Cards
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useImperativeHandle, useRef, forwardRef } from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
+const labelConfig = {
+  temperature:   { label: "Temperature",   unit: "°C", max: 50,   color: "#ef4444" },
+  humidity:      { label: "Humidity",      unit: "%",  max: 100,  color: "#3b82f6" },
+  aqi:           { label: "AQI",           unit: "",   max: 300,  color: "#f97316" },
+  vibration:     { label: "Vibration",     unit: " Hz",max: 10,   color: "#8b5cf6" },
+  visitor_count: { label: "Visitors",      unit: "",   max: 1000, color: "#10b981" },
+  rainfall:      { label: "Rainfall",      unit: " mm",max: 150,  color: "#06b6d4" },
+};
 
 const Cards = forwardRef((props, ref) => {
-  const cellRefs = useRef({});
-  const progressRefs = useRef({});
-
-  const labelConfig = {
-    aqi: { label: "AQI", unit: "", max: 500, color: "bg-red-500" },
-    humidity: { label: "Humidity", unit: "%", max: 100, color: "bg-blue-500" },
-    rainfall: { label: "Rainfall", unit: " mm", max: 50, color: "bg-cyan-500" },
-    temperature: { label: "Temperature", unit: "°C", max: 50, color: "bg-orange-500" },
-    vibration: { label: "Vibration", unit: " Hz", max: 10, color: "bg-purple-500" },
-    visitor_count: { label: "Visitor Count", unit: "", max: 1000, color: "bg-green-500" },
-  };
+  const valueRefs    = useRef({});
+  const barRefs      = useRef({});
+  const pctRefs      = useRef({});
+  const rowRefs      = useRef({});
 
   useImperativeHandle(ref, () => ({
     update: (newData) => {
       if (!newData) return;
       Object.entries(newData).forEach(([key, value]) => {
         const config = labelConfig[key];
-        
-        // Update Text
-        if (cellRefs.current[key]) {
-          cellRefs.current[key].innerText = `${value}${config?.unit || ""}`;
+        if (!config) return;
+
+        if (valueRefs.current[key]) {
+          valueRefs.current[key].innerText = `${value}${config.unit}`;
         }
 
-        // Update Progress Bar Width
-        if (progressRefs.current[key] && config) {
-          const percentage = Math.min((value / config.max) * 100, 100);
-          progressRefs.current[key].style.width = `${percentage}%`;
-          
-          // Add a brief "flash" effect to show data changed
-          progressRefs.current[key].style.opacity = "0.7";
+        if (barRefs.current[key]) {
+          const pct = Math.min((value / config.max) * 100, 100);
+          barRefs.current[key].style.width = `${pct}%`;
+          if (pctRefs.current[key]) {
+            pctRefs.current[key].innerText = `${Math.round(pct)}%`;
+          }
+        }
+
+        // flash row
+        if (rowRefs.current[key]) {
+          rowRefs.current[key].style.background = `${config.color}08`;
           setTimeout(() => {
-            if(progressRefs.current[key]) progressRefs.current[key].style.opacity = "1";
-          }, 200);
+            if (rowRefs.current[key]) rowRefs.current[key].style.background = "transparent";
+          }, 400);
         }
       });
     },
   }));
 
   return (
-    <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden border border-blue-500">
-      <Table>
-        <TableCaption className="mb-2">Live Telemetric Data</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="pl-6 w-[120px]">Parameter</TableHead>
-            <TableHead className="px-2 text-center">Level</TableHead>
-            <TableHead className="text-right pr-6 w-[100px]">Value</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.entries(labelConfig).map(([key, config]) => (
-            <TableRow key={key} className="h-12">
-              <TableCell className="font-medium capitalize pl-6 whitespace-nowrap">
-                {config.label}
-              </TableCell>
-              
-              {/* Progress Bar Column */}
-              <TableCell className="px-2 min-w-[120px]">
-                <div className="w-full bg-gray-200 dark:bg-zinc-800 rounded-sm h-3 overflow-hidden border border-gray-300">
-                  <div
-                    ref={(el) => (progressRefs.current[key] = el)}
-                    className={"bg-black h-full transition-all duration-700 ease-in-out origin-left"}
-                    style={{ width: "0%" }}
-                  />
-                </div>
-              </TableCell>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
 
-              <TableCell
-                ref={(el) => (cellRefs.current[key] = el)}
-                className="text-right pr-6 font-mono font-bold text-sm tabular-nums"
-              >
-                --
-              </TableCell>
-            </TableRow>
+        .cards-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #ffffff;
+          border: 1px solid blue;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-height: 0;
+        }
+
+        .cards-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 5px 10px;
+          border-bottom: 1px solid #f1f5f9;
+          flex-shrink: 0;
+        }
+
+        .cards-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #0f172a;
+        }
+
+        .cards-live {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 1.5px;
+          color: #10b981;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+
+        .cards-live-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #10b981;
+          animation: cards-blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes cards-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+
+        .cards-body {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+        }
+
+        .cards-body::-webkit-scrollbar { width: 3px; }
+        .cards-body::-webkit-scrollbar-track { background: transparent; }
+        .cards-body::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 99px; }
+
+        .cards-row {
+          display: grid;
+          grid-template-columns: 100px 1fr 72px;
+          align-items: center;
+          padding: 8px 16px;
+          border-bottom: 1px solid #f8fafc;
+          transition: background 0.4s ease;
+          gap: 10px;
+        }
+
+        .cards-row:last-child { border-bottom: none; }
+
+        .cards-row-label {
+          font-size: 15px;
+          font-weight: 600;
+          color: #334155;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .cards-bar-wrap {
+          height: 7px;
+          background: #f1f5f9;
+          border-radius: 99px;
+          overflow: hidden;
+        }
+
+        .cards-bar-fill {
+          height: 100%;
+          border-radius: 99px;
+          width: 0%;
+          transition: width 0.7s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+
+        .cards-right {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 1px;
+        }
+
+        .cards-value {
+          // font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          font-weight: 300;
+          color: #000000;
+          font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+        }
+
+        .cards-pct {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          color: #94a3b8;
+          font-weight: 400;
+        }
+
+        .cards-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          flex-shrink: 0;
+          margin-right: 6px;
+          display: inline-block;
+        }
+      `}</style>
+
+      <div className="cards-root">
+        <div className="cards-header">
+          <span className="cards-title px-1">Live Telemetry</span>
+          <div className="cards-live">
+            <div className="cards-live-dot" />
+            Live
+          </div>
+        </div>
+
+        <div className="cards-body">
+          {Object.entries(labelConfig).map(([key, config]) => (
+            <div
+              key={key}
+              className="cards-row"
+              ref={(el) => (rowRefs.current[key] = el)}
+            >
+              {/* Label with color dot */}
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <span
+                  className="cards-dot"
+                  style={{ background: config.color }}
+                />
+                <span className="cards-row-label">{config.label}</span>
+              </div>
+
+              {/* Bar */}
+              <div className="cards-bar-wrap">
+                <div
+                  className="cards-bar-fill"
+                  ref={(el) => (barRefs.current[key] = el)}
+                  style={{ background: config.color }}
+                />
+              </div>
+
+              {/* Value + pct */}
+              <div className="cards-right">
+                <span
+                  className="cards-value"
+                  ref={(el) => (valueRefs.current[key] = el)}
+                >
+                  —
+                </span>
+                {/* <span
+                  className="cards-pct"
+                  ref={(el) => (pctRefs.current[key] = el)}
+                >
+                  —
+                </span> */}
+              </div>
+            </div>
           ))}
-        </TableBody>
-      </Table>
-    </div>
+        </div>
+      </div>
+    </>
   );
 });
 
 Cards.displayName = "Cards";
 export default Cards;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useImperativeHandle, useRef, forwardRef } from "react";
-// import {
-//   Table,
-//   TableBody,
-//   TableCaption,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table"
-
-// const Cards = forwardRef((props, ref) => {
-//   // FIX: Define as a single Ref holding an object
-//   const cellRefs = useRef({}); 
-
-//   const labelConfig = {
-//     aqi: { label: "AQI", unit: "" },
-//     humidity: { label: "Humidity", unit: "%" },
-//     rainfall: { label: "Rainfall", unit: " mm" },
-//     temperature: { label: "Temperature", unit: "°C" },
-//     vibration: { label: "Vibration", unit: " Hz" },
-//     visitor_count: { label: "Visitor Count", unit: "" },
-//   };
-
-//   useImperativeHandle(ref, () => ({
-//     update: (newData) => {
-//       if (!newData) return;
-//       Object.entries(newData).forEach(([key, value]) => {
-//         // Access the specific DOM element inside the ref object
-//         const element = cellRefs.current[key];
-//         if (element) {
-//           const unit = labelConfig[key]?.unit || "";
-//           element.innerText = `${value}${unit}`;
-//         }
-//       });
-//     },
-//   }));
-
-//   return (
-//     <div className="bg-muted/50 flex-1 rounded-xl overflow-hidden">
-//       <Table>
-//         <TableCaption>Telemetric Data From IOT Devices</TableCaption>
-//         <TableHeader>
-//           <TableRow>
-//             <TableHead className="w-[150px] pl-6">Parameters</TableHead>
-//             <TableHead className="text-right pr-6">Values</TableHead>
-//           </TableRow>
-//         </TableHeader>
-//         <TableBody>
-//           {Object.entries(labelConfig).map(([key, config]) => (
-//             <TableRow key={key}>
-//               <TableCell className="font-medium capitalize pl-6">
-//                 {config.label}
-//               </TableCell>
-//               <TableCell
-//                 // FIX: This correctly assigns the DOM element to our ref object
-//                 ref={(el) => {
-//                   if (el) cellRefs.current[key] = el;
-//                 }}
-//                 className="text-right pr-6 font-mono"
-//               >
-//                 --
-//               </TableCell>
-//             </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </div>
-//   );
-// });
-
-// Cards.displayName = "Cards";
-
-// export default Cards;

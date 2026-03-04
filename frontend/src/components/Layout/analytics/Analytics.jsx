@@ -82,7 +82,7 @@ export default function Analytics() {
   
   {/* Left panel - 20% */}
   <div className="w-[20%] h-full bg-blue-200  rounded-l-xl">
-    <LeftPanel data={res}/>
+    {data && <LeftPanel res={res} data={data}/>}
   </div>
 
   {/* Center panel - 60% */}
