@@ -5,27 +5,35 @@ const DEFAULT_PIPELINE = [
     type: "ppt",
     title: "Site Overview",
     slides: [
-      "https://placehold.co/1920x1080/0f172a/475569?text=Slide+1",
-      "https://placehold.co/1920x1080/0f172a/475569?text=Slide+2",
-      "https://placehold.co/1920x1080/0f172a/475569?text=Slide+3",
-      "https://placehold.co/1920x1080/0f172a/475569?text=Slide+4",
-      "https://placehold.co/1920x1080/0f172a/475569?text=Slide+5",
+      "/slides/1.jpg",
+      "/slides/2.jpg",
+      "/slides/3.jpg",
+      "/slides/4.jpg",
+      "/slides/5.jpg",
     ],
   },
   {
     type: "video",
     title: "Site Walkthrough",
-    url: "https://www.w3schools.com/html/mov_bbb.mp4",
+    url: "/slides/vid.mp4",
   },
   {
-    type: "image",
-    title: "Evidence Photo 1",
-    url: "https://placehold.co/1920x1080/0f172a/475569?text=Image+1",
+    type: "youtube",
+    title: "YouTube Walkthrough",
+    url: "https://www.youtube.com/watch?v=qgWPUQwvenM",
   },
   {
-    type: "image",
-    title: "Evidence Photo 2",
-    url: "https://placehold.co/1920x1080/0f172a/475569?text=Image+2",
+    type: "ppt",
+    title: "Site Overview",
+    slides: [
+      "/slides/7.jpg",
+      "/slides/8.jpg",
+      "/slides/9.jpg",
+      "/slides/10.jpg",
+      "/slides/11.jpg",
+      "/slides/12.jpg",
+      "/slides/15.jpg",
+    ],
   },
 ];
 
@@ -49,12 +57,13 @@ const IconCollapse = () => (
     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
   </svg>
 );
-const IconPPT   = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>;
-const IconVid   = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>;
-const IconImg   = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>;
+const IconPPT = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>;
+const IconVid = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>;
+const IconImg = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>;
+const IconYT = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>;
 
-const TYPE_ICON  = { ppt: <IconPPT />, video: <IconVid />, image: <IconImg /> };
-const TYPE_COLOR = { ppt: "#6366f1", video: "#f97316", image: "#10b981" };
+const TYPE_ICON  = { ppt: <IconPPT />, video: <IconVid />, youtube: <IconYT />, image: <IconImg /> };
+const TYPE_COLOR = { ppt: "#6366f1", video: "#f97316", youtube: "#ef4444", image: "#10b981" };
 
 function flattenPipeline(pipeline) {
   const frames = [];
@@ -70,16 +79,41 @@ function flattenPipeline(pipeline) {
   return frames;
 }
 
+function getYouTubeId(url) {
+  const match = url.match(/(?:v=|youtu\.be\/)([^&?/]+)/);
+  return match ? match[1] : "";
+}
+
+// Load YouTube IFrame API script once
+let ytApiLoaded = false;
+let ytApiCallbacks = [];
+function loadYTApi(cb) {
+  if (window.YT && window.YT.Player) { cb(); return; }
+  ytApiCallbacks.push(cb);
+  if (!ytApiLoaded) {
+    ytApiLoaded = true;
+    window.onYouTubeIframeAPIReady = () => {
+      ytApiCallbacks.forEach(fn => fn());
+      ytApiCallbacks = [];
+    };
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+}
+
 export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
-  const frames   = flattenPipeline(pipeline);
-  const [idx, setIdx]         = useState(0);
-  const [isFS, setIsFS]       = useState(false);
-  const [fadeKey, setFadeKey] = useState(0);
+  const frames = flattenPipeline(pipeline);
+  const [idx, setIdx]               = useState(0);
+  const [isFS, setIsFS]             = useState(false);
+  const [fadeKey, setFadeKey]       = useState(0);
   const [videoEnded, setVideoEnded] = useState(false);
   const [uiVisible, setUiVisible]   = useState(true);
   const uiTimerRef  = useRef(null);
   const videoRef    = useRef(null);
-  const mediaRef    = useRef(null); // the inner media element for fullscreen
+  const mediaRef    = useRef(null);
+  const ytDivRef    = useRef(null);   // div that YT.Player mounts into
+  const ytPlayerRef = useRef(null);   // YT.Player instance
 
   const frame   = frames[idx];
   const isFirst = idx === 0;
@@ -96,7 +130,52 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
   const goNext = useCallback(() => goTo(idx + 1), [idx, goTo]);
   const goPrev = useCallback(() => goTo(idx - 1), [idx, goTo]);
 
-  // Fullscreen on the media element itself
+  // ── YouTube IFrame API player setup ──
+  useEffect(() => {
+    if (frame.type !== "youtube") return;
+
+    const videoId = getYouTubeId(frame.url);
+
+    const init = () => {
+      // Destroy old player if exists
+      if (ytPlayerRef.current) {
+        ytPlayerRef.current.destroy();
+        ytPlayerRef.current = null;
+      }
+      if (!ytDivRef.current) return;
+
+      ytPlayerRef.current = new window.YT.Player(ytDivRef.current, {
+        videoId,
+        playerVars: {
+          autoplay: 1,
+          controls: 1,
+          rel: 0,
+          modestbranding: 1,
+        },
+        events: {
+          onStateChange: (e) => {
+            // YT.PlayerState.ENDED === 0
+            if (e.data === 0) {
+              setVideoEnded(true);
+              // Auto-advance to next slide after 1s
+              setTimeout(() => goNext(), 1000);
+            }
+          },
+        },
+      });
+    };
+
+    loadYTApi(init);
+
+    return () => {
+      if (ytPlayerRef.current) {
+        ytPlayerRef.current.destroy();
+        ytPlayerRef.current = null;
+      }
+    };
+  }, [fadeKey, frame.type, frame.url]); // re-init when frame changes
+
+  // Fullscreen
   const toggleFS = useCallback(() => {
     if (!document.fullscreenElement) {
       mediaRef.current?.requestFullscreen?.();
@@ -124,7 +203,7 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
     return () => window.removeEventListener("keydown", handler);
   }, [goNext, goPrev, toggleFS]);
 
-  // Auto-hide UI overlay after inactivity
+  // Auto-hide UI overlay
   const resetUiTimer = useCallback(() => {
     setUiVisible(true);
     clearTimeout(uiTimerRef.current);
@@ -135,6 +214,13 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
     resetUiTimer();
     return () => clearTimeout(uiTimerRef.current);
   }, [idx]);
+
+  // Video playback rate
+  useEffect(() => {
+    if (frame.type === "video" && videoRef.current) {
+      videoRef.current.playbackRate = 2.0;
+    }
+  }, [fadeKey, frame.type]);
 
   const pipelineItems = pipeline.map((item, i) => ({
     ...item, itemIdx: i, active: frame.itemIdx === i,
@@ -157,192 +243,96 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
           flex-direction: column;
           box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
-
-        /* ── thin top bar ── */
         .mv-topbar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 8px 14px;
-          background: #f8fafc;
-          border-bottom: 1px solid #e2e8f0;
-          flex-shrink: 0;
-          gap: 10px;
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 8px 14px; background: #f8fafc;
+          border-bottom: 1px solid #e2e8f0; flex-shrink: 0; gap: 10px;
         }
-
-        .mv-pipeline {
-          display: flex; gap: 4px; overflow-x: auto; flex: 1;
-          scrollbar-width: none;
-        }
+        .mv-pipeline { display: flex; gap: 4px; overflow-x: auto; flex: 1; scrollbar-width: none; }
         .mv-pipeline::-webkit-scrollbar { display: none; }
-
         .mv-pill {
           display: flex; align-items: center; gap: 5px;
           padding: 3px 9px; border-radius: 20px;
-          border: 1px solid #e2e8f0; background: transparent;
-          color: #94a3b8;
+          border: 1px solid #e2e8f0; background: transparent; color: #94a3b8;
           font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500;
           letter-spacing: 0.5px; white-space: nowrap; cursor: pointer;
           transition: all 0.15s ease;
         }
-        .mv-pill.active {
-          background: #f1f5f9; color: #334155; border-color: #cbd5e1;
-        }
+        .mv-pill.active { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
         .mv-pill-dot { width: 5px; height: 5px; border-radius: 50%; }
-
         .mv-fs-btn {
           display: flex; align-items: center; gap: 5px;
           padding: 4px 9px; border-radius: 7px;
-          border: 1px solid #e2e8f0; background: transparent;
-          color: #94a3b8;
+          border: 1px solid #e2e8f0; background: transparent; color: #94a3b8;
           font-family: 'DM Mono', monospace; font-size: 9px;
           letter-spacing: 1px; cursor: pointer; text-transform: uppercase;
           transition: all 0.15s ease; flex-shrink: 0;
         }
         .mv-fs-btn:hover { background: #f1f5f9; color: #475569; }
-
-        /* ── media stage — this fills remaining space ── */
         .mv-stage {
-          flex: 1;
-          min-height: 0;
-          position: relative;
-          background: #0f172a;
-          overflow: hidden;
-          cursor: none;
+          flex: 1; min-height: 0; position: relative;
+          background: #0f172a; overflow: hidden; cursor: none;
         }
         .mv-stage:hover { cursor: default; }
-
-        /* Media fills stage edge to edge, 16:9 letterboxed */
         .mv-media-wrap {
           width: 100%; height: 100%;
           display: flex; align-items: center; justify-content: center;
         }
-
-        .mv-media-wrap img {
-          width: 100%; height: 100%;
-          object-fit: contain;
-          display: block;
-        }
-        .mv-media-wrap video {
-          width: 100%; height: 100%;
-          object-fit: contain;
-          display: block;
-          outline: none;
-        }
-
-        /* fullscreen override — media element itself goes fullscreen */
-        .mv-media-wrap:fullscreen,
-        .mv-media-wrap:-webkit-full-screen {
-          background: #0f172a;
-        }
-        .mv-media-wrap:fullscreen img,
-        .mv-media-wrap:-webkit-full-screen img {
-          width: 100vw; height: 100vh; object-fit: contain;
-        }
-        .mv-media-wrap:fullscreen video,
-        .mv-media-wrap:-webkit-full-screen video {
-          width: 100vw; height: 100vh; object-fit: contain;
-        }
-
-        .mv-fade {
-          animation: mv-in 0.25s ease;
-        }
-        @keyframes mv-in {
-          from { opacity: 0; transform: scale(0.985); }
-          to   { opacity: 1; transform: scale(1); }
-        }
-
-        /* Overlay UI: arrows + badge — fade with inactivity */
-        .mv-overlay {
-          position: absolute; inset: 0; pointer-events: none;
-          transition: opacity 0.4s ease;
-        }
+        .mv-media-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .mv-media-wrap video { width: 100%; height: 100%; object-fit: contain; display: block; outline: none; }
+        .mv-yt-container { width: 100%; height: 100%; }
+        .mv-yt-container iframe { width: 100% !important; height: 100% !important; border: none; }
+        .mv-media-wrap:fullscreen, .mv-media-wrap:-webkit-full-screen { background: #0f172a; }
+        .mv-media-wrap:fullscreen img, .mv-media-wrap:-webkit-full-screen img { width: 100vw; height: 100vh; object-fit: contain; }
+        .mv-media-wrap:fullscreen video, .mv-media-wrap:-webkit-full-screen video { width: 100vw; height: 100vh; object-fit: contain; }
+        .mv-fade { animation: mv-in 0.25s ease; }
+        @keyframes mv-in { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: scale(1); } }
+        .mv-overlay { position: absolute; inset: 0; pointer-events: none; transition: opacity 0.4s ease; }
         .mv-overlay.hidden { opacity: 0; }
         .mv-overlay.visible { opacity: 1; }
-
         .mv-arrow {
           position: absolute; top: 50%; transform: translateY(-50%);
           width: 40px; height: 40px; border-radius: 50%;
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.12);
+          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
           color: rgba(255,255,255,0.7);
           display: flex; align-items: center; justify-content: center;
-          cursor: pointer; pointer-events: all;
-          transition: all 0.2s ease;
+          cursor: pointer; pointer-events: all; transition: all 0.2s ease;
           backdrop-filter: blur(8px);
         }
         .mv-arrow:hover { background: rgba(255,255,255,0.16); color: #fff; }
         .mv-arrow:disabled { opacity: 0.15; pointer-events: none; }
         .mv-arrow.left  { left: 14px; }
         .mv-arrow.right { right: 14px; }
-
-        /* slide badge top right */
         .mv-badge {
           position: absolute; top: 12px; right: 12px;
           font-family: 'DM Mono', monospace; font-size: 9px;
-          color: rgba(255,255,255,0.5);
-          background: rgba(0,0,0,0.4);
+          color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.4);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: 6px; padding: 3px 8px;
-          backdrop-filter: blur(8px);
-          pointer-events: none;
+          backdrop-filter: blur(8px); pointer-events: none;
         }
-
-        /* video ended hint */
         .mv-video-hint {
           position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
-          font-family: 'DM Mono', monospace; font-size: 10px;
-          color: #10b981;
-          background: rgba(0,0,0,0.5);
-          border: 1px solid #10b98133;
+          font-family: 'DM Mono', monospace; font-size: 10px; color: #10b981;
+          background: rgba(0,0,0,0.5); border: 1px solid #10b98133;
           border-radius: 20px; padding: 5px 14px;
-          pointer-events: none;
-          backdrop-filter: blur(8px);
+          pointer-events: none; backdrop-filter: blur(8px);
         }
-
-        /* ── thin bottom bar ── */
         .mv-bottombar {
           display: flex; align-items: center; justify-content: space-between;
-          padding: 7px 14px;
-          background: #f8fafc; border-top: 1px solid #e2e8f0;
+          padding: 7px 14px; background: #f8fafc; border-top: 1px solid #e2e8f0;
           flex-shrink: 0; gap: 12px;
         }
-
-        .mv-title {
-          display: flex; align-items: center; gap: 6px;
-          font-size: 11px; font-weight: 600; color: #475569;
-          min-width: 0;
-        }
-        .mv-title-text {
-          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
+        .mv-title { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #475569; min-width: 0; }
+        .mv-title-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .mv-title-icon { color: #94a3b8; flex-shrink: 0; }
-
-        .mv-progress-row {
-          flex: 1; display: flex; align-items: center; gap: 8px; max-width: 280px;
-        }
-        .mv-progress-track {
-          flex: 1; height: 3px; background: #e2e8f0; border-radius: 99px; overflow: hidden;
-        }
-        .mv-progress-fill {
-          height: 100%; border-radius: 99px;
-          transition: width 0.5s cubic-bezier(0.34,1.2,0.64,1), background 0.4s ease;
-        }
-        .mv-progress-label {
-          font-family: 'DM Mono', monospace; font-size: 9px; color: #94a3b8; white-space: nowrap;
-        }
-
-        .mv-kbd-row {
-          display: flex; gap: 5px; align-items: center;
-        }
-        .mv-kbd {
-          font-family: 'DM Mono', monospace; font-size: 8px; color: #94a3b8;
-          background: #f1f5f9; border: 1px solid #e2e8f0;
-          border-radius: 4px; padding: 2px 5px;
-        }
-        .mv-kbd-sep {
-          font-family: 'DM Mono', monospace; font-size: 8px; color: #cbd5e1;
-        }
+        .mv-progress-row { flex: 1; display: flex; align-items: center; gap: 8px; max-width: 280px; }
+        .mv-progress-track { flex: 1; height: 3px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
+        .mv-progress-fill { height: 100%; border-radius: 99px; transition: width 0.5s cubic-bezier(0.34,1.2,0.64,1), background 0.4s ease; }
+        .mv-progress-label { font-family: 'DM Mono', monospace; font-size: 9px; color: #94a3b8; white-space: nowrap; }
+        .mv-kbd-row { display: flex; gap: 5px; align-items: center; }
+        .mv-kbd { font-family: 'DM Mono', monospace; font-size: 8px; color: #94a3b8; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px 5px; }
+        .mv-kbd-sep { font-family: 'DM Mono', monospace; font-size: 8px; color: #cbd5e1; }
       `}</style>
 
       <div className="mv-shell">
@@ -372,16 +362,13 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
         </div>
 
         {/* ── Media stage ── */}
-        <div
-          className="mv-stage"
-          onMouseMove={resetUiTimer}
-          onClick={resetUiTimer}
-        >
-          {/* The media wrap is what goes fullscreen */}
+        <div className="mv-stage" onMouseMove={resetUiTimer} onClick={resetUiTimer}>
           <div className="mv-media-wrap" ref={mediaRef}>
+
             {(frame.type === "ppt" || frame.type === "image") && (
               <img key={fadeKey} className="mv-fade" src={frame.url} alt={frame.title} />
             )}
+
             {frame.type === "video" && (
               <video
                 key={fadeKey}
@@ -390,23 +377,32 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
                 src={frame.url}
                 controls
                 autoPlay
-                onEnded={() => setVideoEnded(true)}
+                onEnded={() => { setVideoEnded(true); setTimeout(() => goNext(), 1000); }}
               />
             )}
+
+            {/* YouTube: div is the mount target for YT.Player */}
+            {frame.type === "youtube" && (
+              <div className="mv-yt-container mv-fade" key={fadeKey}>
+                <div ref={ytDivRef} />
+              </div>
+            )}
+
           </div>
 
           {/* Overlay UI */}
           <div className={`mv-overlay ${uiVisible ? "visible" : "hidden"}`}>
             <button className="mv-arrow left"  onClick={goPrev} disabled={isFirst}><IconPrev /></button>
             <button className="mv-arrow right" onClick={goNext} disabled={isLast}><IconNext /></button>
-
             {frame.type === "ppt" && (
               <div className="mv-badge">{frame.slideNum} / {frame.totalSlides}</div>
             )}
           </div>
 
           {videoEnded && (
-            <div className="mv-video-hint">Video ended · press → to continue</div>
+            <div className="mv-video-hint">
+              {frame.type === "youtube" ? "Video ended · advancing…" : "Video ended · press → to continue"}
+            </div>
           )}
         </div>
 
@@ -416,17 +412,12 @@ export default function MediaViewer({ pipeline = DEFAULT_PIPELINE }) {
             <span className="mv-title-icon">{TYPE_ICON[frame.type]}</span>
             <span className="mv-title-text">{frame.title}</span>
           </div>
-
           <div className="mv-progress-row">
             <div className="mv-progress-track">
-              <div
-                className="mv-progress-fill"
-                style={{ width: `${pct}%`, background: TYPE_COLOR[frame.type] }}
-              />
+              <div className="mv-progress-fill" style={{ width: `${pct}%`, background: TYPE_COLOR[frame.type] }} />
             </div>
             <span className="mv-progress-label">{idx + 1} / {frames.length}</span>
           </div>
-
           <div className="mv-kbd-row">
             <span className="mv-kbd">← →</span>
             <span className="mv-kbd-sep">·</span>

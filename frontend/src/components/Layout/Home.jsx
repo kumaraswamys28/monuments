@@ -1,11 +1,12 @@
 import { AppSidebar } from "@/components/app-sidebar"
-
-import {
+import Fullscreen from "../../slides/Fullscreen"
+ import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import MediaViewer from "./slides.jsx"
+// import Slides from "../../slides/Slides"
+import MediaViewer from "./slides"
 
 export default function Home() {
   return (
@@ -19,8 +20,11 @@ export default function Home() {
         </header>
         <div className="flex  flex-1 flex-col gap-4 p-4 pt-0">
           <div className="bg-muted/75 min-h-[100vh] bg-green-400 flex-1 rounded-xl md:min-h-min" >
-          <MediaViewer />
-          </div>
+{/* <Fullscreen >
+  <Slides />
+</Fullscreen> */}
+<MediaViewer/>
+</div>
         </div>
       </SidebarInset>
     </SidebarProvider>

@@ -45,7 +45,7 @@ function DeviceIDcard({ deviceId = "SIM_DEVICE_01" }) {
 
   return (
     <>
-      <style>{`
+       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
 
         .dc-root {
@@ -128,7 +128,6 @@ function DeviceIDcard({ deviceId = "SIM_DEVICE_01" }) {
           font-variant-numeric: tabular-nums;
         }
 
-        /* Right side */
         .dc-right {
           display: flex; flex-direction: column;
           align-items: stretch; gap: 8px; height: 100%;
@@ -192,7 +191,157 @@ function DeviceIDcard({ deviceId = "SIM_DEVICE_01" }) {
           font-family: 'DM Mono', monospace; font-size: 11px;
           font-weight: 500; color: #334155;
         }
-      `}</style>
+      `}</style> 
+
+
+
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .dc-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          padding: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          align-items: center;
+          min-height: 200px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          transition: box-shadow 0.2s ease;
+        }
+        .dc-root:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+        .dc-left { display: flex; flex-direction: column; gap: 6px; }
+
+        .dc-status-badge {
+          display: inline-flex; align-items: center; gap: 6px;
+          border-radius: 20px; padding: 3px 10px 3px 6px;
+          margin-bottom: 4px; width: fit-content;
+          background: rgba(115,191,105,0.1); border: 1px solid rgba(115,191,105,0.2);
+        }
+        .dc-status-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #73bf69;
+          animation: dc-pulse 2s ease-in-out infinite;
+        }
+        @keyframes dc-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.4; transform: scale(0.8); }
+        }
+        .dc-status-text {
+          font-family: 'DM Mono', monospace; font-size: 11px;
+          letter-spacing: 1.5px; color: #73bf69; font-weight: 500;
+        }
+
+        .dc-section-label {
+          font-family: 'DM Mono', monospace; font-size: 14px;
+          letter-spacing: 1px; color: #8e9099;
+          text-transform: uppercase; font-weight: 500;
+        }
+
+        .dc-id-block {
+          background: #181b1f;
+          border: 1px solid #34383f;
+          border-radius: 8px;
+          padding: 10px 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .dc-id-prefix {
+          font-family: 'DM Mono', monospace;
+          font-size: 11px; color: #5a5f6b; font-weight: 400;
+          letter-spacing: 1px;
+        }
+        .dc-id-suffix {
+          font-family: 'DM Mono', monospace;
+          font-size: 26px; font-weight: 500;
+          color: #d0d1d3; letter-spacing: 1px;
+          line-height: 1.1;
+        }
+
+        .dc-divider { height: 1px; background: #2c3038; margin: 4px 0; }
+
+        .dc-uptime-row {
+          display: flex; flex-direction: column; gap: 1px;
+        }
+        .dc-uptime-label {
+          font-family: 'DM Mono', monospace; font-size: 10px;
+          letter-spacing: 1px; color: #5a5f6b; text-transform: uppercase;
+        }
+        .dc-uptime-val {
+          font-family: 'DM Mono', monospace; font-size: 20px;
+          font-weight: 500; color: #d0d1d3; letter-spacing: 1px;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .dc-right {
+          display: flex; flex-direction: column;
+          align-items: stretch; gap: 8px; height: 100%;
+          justify-content: center;
+        }
+
+        .dc-ping-card {
+          background: #181b1f;
+          border: 1px solid #34383f;
+          border-radius: 8px;
+          padding: 10px 12px;
+        }
+        .dc-ping-header {
+          display: flex; justify-content: space-between; align-items: center;
+          margin-bottom: 8px;
+        }
+        .dc-ping-label {
+          font-family: 'DM Mono', monospace; font-size: 9px;
+          letter-spacing: 1.5px; color: #5a5f6b; text-transform: uppercase;
+        }
+        .dc-ping-val {
+          font-family: 'DM Mono', monospace; font-size: 13px;
+          font-weight: 500; color: ${pingColor};
+          transition: color 0.3s;
+        }
+        .dc-ping-bars {
+          display: flex; align-items: flex-end; gap: 3px; height: 32px;
+        }
+        .dc-ping-bar {
+          flex: 1; border-radius: 2px 2px 0 0;
+          transition: height 0.4s ease, background 0.3s;
+          min-height: 2px;
+        }
+        .dc-ping-quality {
+          display: flex; justify-content: space-between; margin-top: 5px;
+        }
+        .dc-ping-quality-label {
+          font-family: 'DM Mono', monospace; font-size: 9px;
+          letter-spacing: 1px; color: ${pingColor}; font-weight: 500;
+        }
+        .dc-ping-quality-ms {
+          font-family: 'DM Mono', monospace; font-size: 9px;
+          color: #5a5f6b;
+        }
+
+        .dc-meta-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+        }
+        .dc-meta-item {
+          background: #181b1f;
+          border: 1px solid #34383f;
+          border-radius: 8px;
+          padding: 8px 10px;
+        }
+        .dc-meta-key {
+          font-family: 'DM Mono', monospace; font-size: 8.5px;
+          letter-spacing: 1px; color: #5a5f6b;
+          text-transform: uppercase; margin-bottom: 3px;
+        }
+        .dc-meta-val {
+          font-family: 'DM Mono', monospace; font-size: 11px;
+          font-weight: 500; color: #d0d1d3;
+        }
+      `}</style> */}
 
       <div className="dc-root">
         {/* Left */}

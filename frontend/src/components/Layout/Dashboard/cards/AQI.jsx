@@ -213,6 +213,136 @@ function AQIcard({ res = 0 }) {
         }
       `}</style>
 
+
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .ac-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          padding: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          align-items: center;
+          min-height: 200px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          transition: box-shadow 0.2s ease;
+        }
+        .ac-root:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+        .ac-left { display: flex; flex-direction: column; gap: 4px; }
+        .ac-zone-badge {
+          display: inline-flex; align-items: center; gap: 6px;
+          border-radius: 20px; padding: 3px 10px 3px 6px;
+          margin-bottom: 8px; width: fit-content;
+          background: ${zone.bg}; border: 1px solid ${zone.color}33;
+        }
+        .ac-zone-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: ${zone.color};
+          animation: ac-pulse 2s ease-in-out infinite;
+        }
+        @keyframes ac-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .ac-zone-text {
+          font-family: 'DM Mono', monospace; font-size: 11px;
+          letter-spacing: 1.5px; color: ${zone.color}; font-weight: 500;
+        }
+        .ac-section-label {
+          font-family: 'DM Mono', monospace; font-size: 14px;
+          letter-spacing: 1px; color: #8e9099;
+          text-transform: uppercase; font-weight: 500; margin-bottom: 1px;
+        }
+        .ac-current-row { display: flex; align-items: flex-end; gap: 4px; line-height: 1; }
+        .ac-current-val {
+          font-size: 62px; font-weight: 700; color: #d0d1d3;
+          letter-spacing: -2px; line-height: 1;
+          font-variant-numeric: tabular-nums; transition: color 0.4s ease;
+        }
+        .ac-current-val.flash { color: ${zone.color}; }
+        .ac-trend { font-size: 18px; padding-bottom: 10px; font-weight: 600; color: ${zone.color}; }
+        .ac-desc { font-size: 14px; color: #5a5f6b; font-weight: 400; margin-top: 2px; }
+        .ac-divider { height: 1px; background: #2c3038; margin: 10px 0; }
+        .ac-minmax { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .ac-stat-label {
+          font-family: 'DM Mono', monospace; font-size: 13px;
+          letter-spacing: 1px; color: #8e9099;
+          text-transform: uppercase; font-weight: 500; margin-bottom: 2px;
+        }
+        .ac-stat-val { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .ac-stat-val.min { color: #5794f2; }
+        .ac-stat-val.max { color: #f2495c; }
+
+        .ac-right {
+          display: flex; flex-direction: column;
+          align-items: stretch; gap: 6px; height: 100%;
+        }
+
+        .ac-chart-wrap {
+          background: #181b1f;
+          border: 1px solid #34383f;
+          border-radius: 8px;
+          overflow: hidden;
+          flex: 1;
+          min-height: 90px;
+          padding: 8px 4px 4px 0;
+          position: relative;
+        }
+        .ac-chart-title {
+          position: absolute;
+          top: 6px; left: 10px;
+          font-family: 'DM Mono', monospace;
+          font-size: 8px; letter-spacing: 1px;
+          color: #5a5f6b; font-weight: 500;
+          text-transform: uppercase;
+          z-index: 1;
+        }
+
+        .ac-bar-section {
+          background: #181b1f;
+          border: 1px solid #34383f;
+          border-radius: 8px;
+          padding: 10px 10px 8px;
+        }
+        .ac-tick-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .ac-tick-val { font-family: 'DM Mono', monospace; font-size: 8px; color: #5a5f6b; font-weight: 400; }
+        .ac-bar-track {
+          position: relative; height: 10px; border-radius: 99px; overflow: visible;
+          background: linear-gradient(to right,
+            #73bf69 0%, #73bf69 16.6%,
+            #fade2a 16.6%, #fade2a 33.3%,
+            #ff780a 33.3%, #ff780a 50%,
+            #f2495c 50%, #f2495c 66.6%,
+            #b877d9 66.6%, #b877d9 100%
+          );
+          margin-bottom: 6px;
+        }
+        .ac-bar-marker {
+          position: absolute; top: 50%;
+          transform: translate(-50%, -50%);
+          width: 16px; height: 16px; border-radius: 50%;
+          background: #1f2329;
+          border: 2.5px solid ${zone.color};
+          box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+          transition: left 0.6s cubic-bezier(0.34,1.2,0.64,1), border-color 0.4s ease;
+          z-index: 2;
+        }
+        .ac-bar-marker::after {
+          content: ''; position: absolute; inset: 3px;
+          border-radius: 50%; background: ${zone.color};
+          transition: background 0.4s ease;
+        }
+        .ac-bar-labels { display: flex; justify-content: space-between; }
+        .ac-bar-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px; letter-spacing: 0.3px; font-weight: 500; line-height: 1;
+        }
+      `}</style> */}
+
       <div className="ac-root">
         {/* Left */}
         <div className="ac-left">

@@ -22,6 +22,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useMatch } from "react-router-dom";
+import BackendStatus from "../Layout/Backend";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -222,12 +224,13 @@ function Sidebar({
 
 function SidebarTrigger({
   className,
-  
+
   ...props
 }) {
   const { toggleSidebar } = useSidebar()
+  const page=useMatch("/");
 
-  return (
+  return (<>
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
@@ -240,8 +243,18 @@ function SidebarTrigger({
       }}
       {...props}>
       <PanelLeftIcon />
+
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
+  {page &&<>  <h1 className="text-center text-2xl font-semibold  mx-auto">
+  Centre of Excellence for AI and IoT Driven XR Digital-Twin Technologies
+  in Smart-Heritage Conservation and Generative Restoration of Karnataka’s Monuments
+</h1>
+ </>
+
+}     <BackendStatus />
+
+    </>
   );
 }
 
@@ -537,7 +550,7 @@ function SidebarMenuAction({
         "peer-data-[size=lg]/menu-button:top-2.5",
         "group-data-[collapsible=icon]:hidden",
         showOnHover &&
-          "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
+        "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
         className
       )}
       {...props} />

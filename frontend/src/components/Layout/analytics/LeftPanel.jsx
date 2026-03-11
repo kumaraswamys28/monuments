@@ -92,7 +92,6 @@ export default function LeftPanel({ res, data }) {
         .lp-root::-webkit-scrollbar-track { background: transparent; }
         .lp-root::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 99px; }
 
-        /* Header */
         .lp-header {
           display: flex;
           justify-content: space-between;
@@ -140,7 +139,6 @@ export default function LeftPanel({ res, data }) {
           0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
         }
 
-        /* Section label */
         .lp-section {
           font-family: 'DM Mono', monospace;
           font-size: 14px;
@@ -152,7 +150,6 @@ export default function LeftPanel({ res, data }) {
           border-bottom: 1px solid #f1f5f9;
         }
 
-        /* Metric rows */
         .lp-metrics {
           display: flex;
           flex-direction: column;
@@ -220,7 +217,6 @@ export default function LeftPanel({ res, data }) {
           transition: width 0.7s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
 
-        /* Alerts */
         .lp-alerts {
           display: flex;
           flex-direction: column;
@@ -264,6 +260,195 @@ export default function LeftPanel({ res, data }) {
           margin: 12px 0;
         }
       `}</style>
+
+
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .lp-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border-right: 1px solid #34383f;
+          width: 100%;
+          height: 100%;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          padding: 16px 16px 12px;
+          box-sizing: border-box;
+        }
+        .lp-root::-webkit-scrollbar { width: 3px; }
+        .lp-root::-webkit-scrollbar-track { background: transparent; }
+        .lp-root::-webkit-scrollbar-thumb { background: #34383f; border-radius: 99px; }
+
+        .lp-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 14px;
+        }
+        .lp-title {
+          font-size: 16px;
+          font-weight: 700;
+          color: #d0d1d3;
+          line-height: 1.3;
+        }
+        .lp-device {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          color: #8e9099;
+          margin-top: 2px;
+        }
+        .lp-time {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          color: #8e9099;
+          margin-top: 1px;
+        }
+        .lp-live-badge {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1.5px;
+          color: #73bf69;
+          border: 1px solid rgba(115,191,105,0.2);
+          background: rgba(115,191,105,0.1);
+          border-radius: 20px;
+          padding: 3px 10px 3px 7px;
+        }
+        .lp-live-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #73bf69;
+          animation: lp-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes lp-pulse {
+          0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+        }
+
+        .lp-section {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          letter-spacing: 2px;
+          color: #8e9099;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+          padding-bottom: 6px;
+          border-bottom: 1px solid #2c3038;
+        }
+
+        .lp-metrics {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+
+        .lp-metric-row {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .lp-metric-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+        }
+
+        .lp-metric-label {
+          font-size: 14px;
+          font-weight: 600;
+          color: #8e9099;
+        }
+
+        .lp-metric-right {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+        }
+
+        .lp-metric-status {
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+
+        .lp-metric-value {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          font-weight: 600;
+          color: #d0d1d3;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .lp-metric-unit {
+          font-size: 14px;
+          font-weight: 400;
+          color: #5a5f6b;
+          margin-left: 1px;
+        }
+
+        .lp-bar-track {
+          height: 8px;
+          background: #2a2e36;
+          border-radius: 99px;
+          overflow: hidden;
+        }
+
+        .lp-bar-fill {
+          height: 100%;
+          border-radius: 99px;
+          transition: width 0.7s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+
+        .lp-alerts {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .lp-alert-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 7px 10px;
+          border-radius: 8px;
+          background: rgba(242,73,92,0.1);
+          border: 1px solid rgba(242,73,92,0.25);
+        }
+
+        .lp-alert-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+
+        .lp-alert-msg {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.3px;
+        }
+
+        .lp-no-alerts {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          color: #73bf69;
+          letter-spacing: 0.5px;
+        }
+
+        .lp-divider {
+          height: 1px;
+          background: #2c3038;
+          margin: 12px 0;
+        }
+      `}</style> */}
 
       <div className="lp-root">
         {/* Header */}

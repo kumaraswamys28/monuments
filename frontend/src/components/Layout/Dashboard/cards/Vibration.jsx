@@ -285,6 +285,176 @@ function Vibrationcard({ res = 0 }) {
         }
       `}</style>
 
+
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .vc-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          padding: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          align-items: center;
+          min-height: 200px;
+          position: relative;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          transition: box-shadow 0.2s ease;
+        }
+
+        .vc-root:hover {
+          box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .vc-left {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .vc-zone-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          border-radius: 20px;
+          padding: 3px 10px 3px 6px;
+          margin-bottom: 8px;
+          width: fit-content;
+          background: ${zone.bg};
+          border: 1px solid ${zone.color}33;
+        }
+
+        .vc-zone-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: ${zone.color};
+          animation: vc-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes vc-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .vc-zone-text {
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          color: ${zone.color};
+          font-weight: 500;
+        }
+
+        .vc-section-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          letter-spacing: 1px;
+          color: #8e9099;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin-bottom: 1px;
+        }
+
+        .vc-current-row {
+          display: flex;
+          align-items: flex-end;
+          gap: 4px;
+          line-height: 1;
+        }
+
+        .vc-current-val {
+          font-size: 62px;
+          font-weight: 700;
+          color: #d0d1d3;
+          letter-spacing: -2px;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+          transition: color 0.4s ease;
+        }
+
+        .vc-current-val.flash {
+          color: ${zone.color};
+        }
+
+        .vc-unit {
+          font-size: 18px;
+          font-weight: 400;
+          color: #5a5f6b;
+          padding-bottom: 10px;
+        }
+
+        .vc-trend {
+          font-size: 18px;
+          padding-bottom: 10px;
+          font-weight: 600;
+          color: ${zone.color};
+        }
+
+        .vc-divider {
+          height: 1px;
+          background: #2c3038;
+          margin: 10px 0;
+        }
+
+        .vc-minmax {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+
+        .vc-stat-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          letter-spacing: 1px;
+          color: #8e9099;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin-bottom: 2px;
+        }
+
+        .vc-stat-val {
+          font-size: 22px;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .vc-stat-val.min { color: #5794f2; }
+        .vc-stat-val.max { color: #f2495c; }
+
+        .vc-right {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+
+        .vc-canvas-wrap {
+          position: relative;
+          width: 100%;
+          background: #181b1f;
+          border-radius: 8px;
+          border: 1px solid #34383f;
+          overflow: hidden;
+        }
+
+        .vc-canvas-wrap canvas {
+          display: block;
+          width: 100%;
+        }
+
+        .vc-scale-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          letter-spacing: 1.5px;
+          color: #8e9099;
+          font-weight: 500;
+        }
+      `}</style> */}
+
       <div className="vc-root">
         {/* Left */}
         <div className="vc-left">

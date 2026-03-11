@@ -56,6 +56,32 @@ const AqiChart = forwardRef((props, ref) => {
         .aqic-legend-item { display: flex; align-items: center; gap: 5px; font-family: 'DM Mono', monospace; font-size: 13px; color: #64748b; }
         .aqic-legend-dot { width: 10px; height: 3px; border-radius: 2px; }
       `}</style>
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+        .aqic-root {
+          font-family: 'DM Sans', sans-serif; background: #1f2329;
+          border: 1px solid #34383f; border-radius: 12px;
+          padding: 14px 16px 10px; display: flex; flex-direction: column;
+          gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          min-height: 0; flex: 1; overflow: hidden;
+        }
+        .aqic-header { display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0; }
+        .aqic-title { font-size: 18px; font-weight: 700; color: #d0d1d3; line-height: 1.2; }
+        .aqic-subtitle { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #5a5f6b; text-transform: uppercase; margin-top: 2px; }
+        .aqic-live { display: flex; align-items: center; gap: 5px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #73bf69; font-weight: 500; text-transform: uppercase; }
+        .aqic-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #73bf69; animation: aqic-blink 1.5s ease-in-out infinite; flex-shrink: 0; }
+        @keyframes aqic-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .aqic-divider { height: 1px; background: #2c3038; flex-shrink: 0; }
+        .aqic-stats { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+        .aqic-stat-sep { width: 1px; height: 28px; background: #2c3038; flex-shrink: 0; }
+        .aqic-stat-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 1px; }
+        .aqic-stat-val { font-size: 18px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+        .aqic-chart { flex: 1; min-height: 0; }
+        .aqic-empty { flex: 1; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: 1px; color: #5a5f6b; text-transform: uppercase; }
+        .aqic-legend { display: flex; gap: 14px; flex-shrink: 0; }
+        .aqic-legend-item { display: flex; align-items: center; gap: 5px; font-family: 'DM Mono', monospace; font-size: 13px; color: #8e9099; }
+        .aqic-legend-dot { width: 10px; height: 3px; border-radius: 2px; }
+      `}</style> */}
 
       <div className="aqic-root border border-blue-500">
         <div className="aqic-header">

@@ -181,6 +181,139 @@ const Cards = forwardRef((props, ref) => {
         }
       `}</style>
 
+     {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .cards-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-height: 0;
+        }
+
+        .cards-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 5px 10px;
+          border-bottom: 1px solid #2c3038;
+          flex-shrink: 0;
+        }
+
+        .cards-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #d0d1d3;
+        }
+
+        .cards-live {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 1.5px;
+          color: #73bf69;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+
+        .cards-live-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #73bf69;
+          animation: cards-blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes cards-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+
+        .cards-body {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+        }
+
+        .cards-body::-webkit-scrollbar { width: 3px; }
+        .cards-body::-webkit-scrollbar-track { background: transparent; }
+        .cards-body::-webkit-scrollbar-thumb { background: #34383f; border-radius: 99px; }
+
+        .cards-row {
+          display: grid;
+          grid-template-columns: 100px 1fr 72px;
+          align-items: center;
+          padding: 8px 16px;
+          border-bottom: 1px solid #22262d;
+          transition: background 0.4s ease;
+          gap: 10px;
+        }
+
+        .cards-row:last-child { border-bottom: none; }
+
+        .cards-row-label {
+          font-size: 15px;
+          font-weight: 600;
+          color: #d0d1d3;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .cards-bar-wrap {
+          height: 7px;
+          background: #2a2e36;
+          border-radius: 99px;
+          overflow: hidden;
+        }
+
+        .cards-bar-fill {
+          height: 100%;
+          border-radius: 99px;
+          width: 0%;
+          transition: width 0.7s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+
+        .cards-right {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 1px;
+        }
+
+        .cards-value {
+          font-size: 13px;
+          font-weight: 300;
+          color: #d0d1d3;
+          font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+        }
+
+        .cards-pct {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          color: #5a5f6b;
+          font-weight: 400;
+        }
+
+        .cards-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          flex-shrink: 0;
+          margin-right: 6px;
+          display: inline-block;
+        }
+      `}</style> */}
+
       <div className="cards-root">
         <div className="cards-header">
           <span className="cards-title px-1">Live Telemetry</span>

@@ -183,6 +183,162 @@ function Tempcard({ res = 0 }) {
         }
       `}</style>
 
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .tc-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          padding: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          align-items: center;
+          min-height: 200px;
+          position: relative;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          transition: box-shadow 0.2s ease;
+        }
+
+        .tc-root:hover {
+          box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .tc-left {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .tc-zone-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          border-radius: 20px;
+          padding: 3px 10px 3px 6px;
+          margin-bottom: 8px;
+          width: fit-content;
+          background: ${zone.bg};
+          border: 1px solid ${zone.color}33;
+        }
+
+        .tc-zone-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: ${zone.color};
+          animation: tc-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes tc-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .tc-zone-text {
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          color: ${zone.color};
+          font-weight: 500;
+        }
+
+        .tc-section-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          letter-spacing: 1px;
+          color: #8e9099;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin-bottom: 1px;
+        }
+
+        .tc-current-row {
+          display: flex;
+          align-items: flex-end;
+          gap: 4px;
+          line-height: 1;
+        }
+
+        .tc-current-val {
+          font-size: 62px;
+          font-weight: 700;
+          color: #d0d1d3;
+          letter-spacing: -2px;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+          transition: color 0.4s ease;
+        }
+
+        .tc-current-val.flash {
+          color: ${zone.color};
+        }
+
+        .tc-unit {
+          font-size: 20px;
+          font-weight: 300;
+          color: #5a5f6b;
+          padding-bottom: 8px;
+        }
+
+        .tc-trend {
+          font-size: 18px;
+          padding-bottom: 8px;
+          font-weight: 600;
+          color: ${zone.color};
+        }
+
+        .tc-divider {
+          height: 1px;
+          background: #2c3038;
+          margin: 10px 0;
+        }
+
+        .tc-minmax {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+
+        .tc-stat-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          letter-spacing: 1px;
+          color: #8e9099;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin-bottom: 2px;
+        }
+
+        .tc-stat-val {
+          font-size: 22px;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .tc-stat-val.min { color: #5794f2; }
+        .tc-stat-val.max { color: #f2495c; }
+
+        .tc-right {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 2px;
+        }
+
+        .tc-gauge-subtitle {
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          letter-spacing: 1.5px;
+          color: #8e9099;
+          font-weight: 500;
+          margin-top: -4px;
+        }
+      `}</style> */}
+
       <div className="tc-root">
         {/* Left */}
         <div className="tc-left">

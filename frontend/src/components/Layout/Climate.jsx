@@ -176,6 +176,148 @@ const ClimateChart = forwardRef((props, ref) => {
         }
       `}</style>
 
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .cc-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          padding: 14px 16px 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          min-height: 0;
+          flex: 1;
+          overflow: hidden;
+        }
+
+        .cc-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-shrink: 0;
+        }
+
+        .cc-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #d0d1d3;
+          line-height: 1.2;
+        }
+
+        .cc-subtitle {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 1px;
+          color: #5a5f6b;
+          text-transform: uppercase;
+          margin-top: 2px;
+        }
+
+        .cc-live {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          color: #73bf69;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+
+        .cc-live-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #73bf69;
+          animation: cc-blink 1.5s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+
+        @keyframes cc-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+
+        .cc-divider {
+          height: 1px;
+          background: #2c3038;
+          flex-shrink: 0;
+        }
+
+        .cc-stats {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          flex-shrink: 0;
+        }
+
+        .cc-stat-sep {
+          width: 1px;
+          height: 28px;
+          background: #2c3038;
+          flex-shrink: 0;
+        }
+
+        .cc-stat-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin-bottom: 1px;
+        }
+
+        .cc-stat-val {
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .cc-chart {
+          flex: 1;
+          min-height: 0;
+        }
+
+        .cc-empty {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          letter-spacing: 1px;
+          color: #5a5f6b;
+          text-transform: uppercase;
+        }
+
+        .cc-legend {
+          display: flex;
+          gap: 14px;
+          flex-shrink: 0;
+        }
+
+        .cc-legend-item {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          color: #8e9099;
+        }
+
+        .cc-legend-dot {
+          width: 10px;
+          height: 3px;
+          border-radius: 2px;
+        }
+      `}</style> */}
+
       <div className="cc-root">
         {/* Header */}
         <div className="cc-header">

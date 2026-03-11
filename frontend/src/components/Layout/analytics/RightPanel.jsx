@@ -77,7 +77,6 @@ export default function RightPanel({ res = {} }) {
         .rp-root::-webkit-scrollbar-track { background: transparent; }
         .rp-root::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 99px; }
 
-        /* Section wrapper */
         .rp-section {
           padding: 14px 0 12px;
           border-bottom: 1px solid #f1f5f9;
@@ -101,7 +100,6 @@ export default function RightPanel({ res = {} }) {
           margin-bottom: 6px;
         }
 
-        /* Risk Index */
         .rp-risk-row {
           display: flex;
           align-items: center;
@@ -136,7 +134,6 @@ export default function RightPanel({ res = {} }) {
           transition: width 0.8s cubic-bezier(0.34,1.2,0.64,1);
         }
 
-        /* Drivers */
         .rp-drivers {
           display: flex;
           flex-direction: column;
@@ -178,7 +175,6 @@ export default function RightPanel({ res = {} }) {
           flex-shrink: 0;
         }
 
-        /* Forecast rows */
         .rp-forecast-rows {
           display: flex;
           flex-direction: column;
@@ -225,7 +221,6 @@ export default function RightPanel({ res = {} }) {
           margin-top: 8px;
         }
 
-        /* Restoration tabs */
         .rp-tabs {
           display: flex;
           gap: 4px;
@@ -276,6 +271,222 @@ export default function RightPanel({ res = {} }) {
           line-height: 1.5;
         }
       `}</style>
+
+
+
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .rp-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border-left: 1px solid #34383f;
+          width: 100%;
+          height: 100%;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          padding: 16px 14px 16px;
+          box-sizing: border-box;
+        }
+        .rp-root::-webkit-scrollbar { width: 3px; }
+        .rp-root::-webkit-scrollbar-track { background: transparent; }
+        .rp-root::-webkit-scrollbar-thumb { background: #34383f; border-radius: 99px; }
+
+        .rp-section {
+          padding: 14px 0 12px;
+          border-bottom: 1px solid #2c3038;
+        }
+        .rp-section:first-child { padding-top: 0; }
+        .rp-section:last-child { border-bottom: none; }
+
+        .rp-section-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #d0d1d3;
+          margin-bottom: 10px;
+        }
+
+        .rp-tag {
+          font-size: 15px;
+          letter-spacing: 2px;
+          color: #8e9099;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+
+        .rp-risk-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+        .rp-risk-score {
+          font-family: 'DM Mono', monospace;
+          font-size: 42px;
+          font-weight: 500;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+        }
+        .rp-risk-badge {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 1.5px;
+          padding: 4px 10px;
+          border-radius: 20px;
+        }
+        .rp-risk-bar-track {
+          height: 6px;
+          background: #2a2e36;
+          border-radius: 99px;
+          overflow: hidden;
+          margin-bottom: 12px;
+        }
+        .rp-risk-bar-fill {
+          height: 100%;
+          border-radius: 99px;
+          transition: width 0.8s cubic-bezier(0.34,1.2,0.64,1);
+        }
+
+        .rp-drivers {
+          display: flex;
+          flex-direction: column;
+          gap: 7px;
+        }
+        .rp-driver-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .rp-driver-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          color: #8e9099;
+          width: 78px;
+          flex-shrink: 0;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .rp-driver-bar-wrap {
+          flex: 1;
+          height: 9px;
+          background: #2a2e36;
+          border-radius: 99px;
+          overflow: hidden;
+        }
+        .rp-driver-bar {
+          height: 100%;
+          border-radius: 99px;
+          background: #5a5f6b;
+          transition: width 0.7s ease;
+        }
+        .rp-driver-val {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          color: #8e9099;
+          width: 22px;
+          text-align: right;
+          flex-shrink: 0;
+        }
+
+        .rp-forecast-rows {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .rp-forecast-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 8px 10px;
+          background: #181b1f;
+          border-radius: 8px;
+          border: 1px solid #2c3038;
+        }
+        .rp-forecast-time {
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          color: #8e9099;
+          font-weight: 500;
+        }
+        .rp-forecast-right {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .rp-forecast-score {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          font-weight: 600;
+          font-variant-numeric: tabular-nums;
+        }
+        .rp-forecast-badge {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 1px;
+          padding: 2px 7px;
+          border-radius: 20px;
+        }
+        .rp-forecast-note {
+          font-size: 13px;
+          color: #5a5f6b;
+          line-height: 1.4;
+          margin-top: 8px;
+        }
+
+        .rp-tabs {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 10px;
+        }
+        .rp-tab {
+          font-family: 'DM Mono', monospace;
+          font-size: 13px;
+          font-weight: 500;
+          padding: 5px 12px;
+          border-radius: 8px;
+          border: 1px solid #34383f;
+          background: transparent;
+          color: #5a5f6b;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          letter-spacing: 0.3px;
+        }
+        .rp-tab.active {
+          background: #2a2e36;
+          color: #d0d1d3;
+          border-color: #ff780a;
+        }
+        .rp-tab:hover:not(.active) {
+          background: #2a2e36;
+          color: #8e9099;
+        }
+        .rp-image-box {
+          background: #181b1f;
+          border: 1px dashed #34383f;
+          border-radius: 8px;
+          height: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 8px;
+        }
+        .rp-image-placeholder {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          color: #5a5f6b;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        .rp-restoration-note {
+          font-size: 12px;
+          color: #5a5f6b;
+          line-height: 1.5;
+        }
+      `}</style> */}
 
       <div className="rp-root">
 

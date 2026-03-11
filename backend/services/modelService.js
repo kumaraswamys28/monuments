@@ -1,7 +1,7 @@
 const modelsData = [
   {
     id: 1,
-    title:"hampi stone chariot",
+    title:"Hampi Stone Chariot",
     url: "/model.glb",
     transform: { position: [0, -1, 0], rotation: [0, 180, 0], scale: 1.5 },
     iot_data:
@@ -10,11 +10,11 @@ const modelsData = [
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrZHF4eHNuaGZ4bG5jdHRneHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MjEyNjUsImV4cCI6MjA4NzM5NzI2NX0.68SqWEPDhLwvrWcpMLKklWsA96mLq2Bpw55QUb55zRE",
     items: [
         {
-          title: "dashboard",
+          title: "Dashboard",
           url: "#",
         },
          {
-          title: "analytics",
+          title: "Analytics",
           url: "#",
         },
         // {
@@ -30,8 +30,8 @@ const modelsData = [
     {
     id: 2,
 
-   url: "/temple.glb",
-    title:"pole",
+   url: "/polee.glb",
+    title:"Stamba",
     transform: { position: [0, 0, 0], rotation: [500, 60, 40], scale: 1.5 },
     iot_data:
       "https://ykdqxxsnhfxlncttgxrk.supabase.co/rest/v1/iot_data?order=timestamp.desc&limit=1",
@@ -39,11 +39,11 @@ const modelsData = [
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrZHF4eHNuaGZ4bG5jdHRneHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MjEyNjUsImV4cCI6MjA4NzM5NzI2NX0.68SqWEPDhLwvrWcpMLKklWsA96mLq2Bpw55QUb55zRE",
       items: [
         {
-          title: "dashboard",
+          title: "Dashboard",
           url: "#",
         },
         {
-          title: "analytics",
+          title: "Analytics",
           url: "#",
         },
         // {
@@ -60,7 +60,7 @@ const modelsData = [
     url: "/temp.glb",
         // url: "/polee.glb",
 
-    title:"temple",
+    title:"Temple",
     transform: { position: [0, 0, 0], rotation: [0, 180, 0], scale: 1.5 },
     iot_data:
       "https://ykdqxxsnhfxlncttgxrk.supabase.co/rest/v1/iot_data?order=timestamp.desc&limit=1",
@@ -68,11 +68,11 @@ const modelsData = [
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrZHF4eHNuaGZ4bG5jdHRneHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MjEyNjUsImV4cCI6MjA4NzM5NzI2NX0.68SqWEPDhLwvrWcpMLKklWsA96mLq2Bpw55QUb55zRE",
       items: [
         {
-          title: "dashboard",
+          title: "Dashboard",
           url: "#",
         },
       {
-          title: "analytics",
+          title: "Analytics",
           url: "#",
         },
         // {
@@ -84,8 +84,11 @@ const modelsData = [
         //   url: "#",
         // },
       ],
-  },
+  }
 ];
+
+
+
 
 const fetchAllModels = () => modelsData.map(({ title, id, items }) => ({ title, id , items}));
 const fetchModelById = (id) => {

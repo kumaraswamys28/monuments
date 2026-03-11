@@ -1,0 +1,340 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --radius-2xl: calc(var(--radius) + 8px);
+    --radius-3xl: calc(var(--radius) + 12px);
+    --radius-4xl: calc(var(--radius) + 16px);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ── Grafana Dark Theme ─────────────────────────────────────────────────────── */
+:root {
+    --radius: 0.125rem; /* Grafana uses very tight 2px radii */
+
+    /* Grafana exact palette */
+    --gf-bg-canvas:        #181b1f;
+    --gf-bg-primary:       #1f2329;
+    --gf-bg-secondary:     #22262d;
+    --gf-bg-elevated:      #2a2e36;
+    --gf-border:           #34383f;
+    --gf-border-weak:      #2c3038;
+    --gf-text-primary:     #d0d1d3;
+    --gf-text-secondary:   #8e9099;
+    --gf-text-disabled:    #5a5f6b;
+    --gf-text-link:        #6e9fff;
+    --gf-orange:           #ff780a; /* Grafana's signature orange */
+    --gf-orange-dim:       #ff7800; /* panel accent */
+    --gf-blue:             #5794f2;
+    --gf-blue-light:       #6e9fff;
+    --gf-green:            #73bf69;
+    --gf-yellow:           #fade2a;
+    --gf-red:              #f2495c;
+    --gf-purple:           #b877d9;
+    --gf-teal:             #3274d9;
+
+    /* Shadcn tokens remapped to Grafana */
+    --background:          var(--gf-bg-canvas);
+    --foreground:          var(--gf-text-primary);
+    --card:                var(--gf-bg-primary);
+    --card-foreground:     var(--gf-text-primary);
+    --popover:             var(--gf-bg-elevated);
+    --popover-foreground:  var(--gf-text-primary);
+    --primary:             var(--gf-orange);
+    --primary-foreground:  #1a1a1a;
+    --secondary:           var(--gf-bg-secondary);
+    --secondary-foreground: var(--gf-text-primary);
+    --muted:               var(--gf-bg-secondary);
+    --muted-foreground:    var(--gf-text-secondary);
+    --accent:              var(--gf-bg-elevated);
+    --accent-foreground:   var(--gf-text-primary);
+    --destructive:         var(--gf-red);
+    --border:              var(--gf-border);
+    --input:               var(--gf-bg-elevated);
+    --ring:                var(--gf-orange);
+
+    /* Chart palette — matches Grafana's default series colors */
+    --chart-1: var(--gf-blue);
+    --chart-2: var(--gf-orange);
+    --chart-3: var(--gf-green);
+    --chart-4: var(--gf-yellow);
+    --chart-5: var(--gf-red);
+
+    /* Sidebar */
+    --sidebar:                    #111217;
+    --sidebar-foreground:         var(--gf-text-secondary);
+    --sidebar-primary:            var(--gf-orange);
+    --sidebar-primary-foreground: #fff;
+    --sidebar-accent:             var(--gf-bg-secondary);
+    --sidebar-accent-foreground:  var(--gf-text-primary);
+    --sidebar-border:             var(--gf-border-weak);
+    --sidebar-ring:               var(--gf-orange);
+}
+
+/* Grafana is always dark — no light mode */
+.dark {
+    --background:          var(--gf-bg-canvas);
+    --foreground:          var(--gf-text-primary);
+    --card:                var(--gf-bg-primary);
+    --card-foreground:     var(--gf-text-primary);
+    --popover:             var(--gf-bg-elevated);
+    --popover-foreground:  var(--gf-text-primary);
+    --primary:             var(--gf-orange);
+    --primary-foreground:  #1a1a1a;
+    --secondary:           var(--gf-bg-secondary);
+    --secondary-foreground: var(--gf-text-primary);
+    --muted:               var(--gf-bg-secondary);
+    --muted-foreground:    var(--gf-text-secondary);
+    --accent:              var(--gf-bg-elevated);
+    --accent-foreground:   var(--gf-text-primary);
+    --destructive:         var(--gf-red);
+    --border:              var(--gf-border);
+    --input:               var(--gf-bg-elevated);
+    --ring:                var(--gf-orange);
+    --chart-1: var(--gf-blue);
+    --chart-2: var(--gf-orange);
+    --chart-3: var(--gf-green);
+    --chart-4: var(--gf-yellow);
+    --chart-5: var(--gf-red);
+    --sidebar:                    #111217;
+    --sidebar-foreground:         var(--gf-text-secondary);
+    --sidebar-primary:            var(--gf-orange);
+    --sidebar-primary-foreground: #fff;
+    --sidebar-accent:             var(--gf-bg-secondary);
+    --sidebar-accent-foreground:  var(--gf-text-primary);
+    --sidebar-border:             var(--gf-border-weak);
+    --sidebar-ring:               var(--gf-orange);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+        box-sizing: border-box;
+    }
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ── Grafana Panel Container ──────────────────────────────────────────────── */
+.gf-panel {
+    background: var(--gf-bg-primary);
+    border: 1px solid var(--gf-border);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.gf-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gf-orange) 0%, transparent 60%);
+    opacity: 0.6;
+}
+
+/* ── Grafana-style scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track  { background: var(--gf-bg-canvas); }
+::-webkit-scrollbar-thumb  { background: var(--gf-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gf-text-disabled); }
+
+
+/* ── Grafana-style focus ring on inputs ───────────────────────────────────── */
+input:focus-visible,
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 1px solid var(--gf-orange) !important;
+    outline-offset: 0;
+}
+
+/* ── Range inputs — match Grafana slider ─────────────────────────────────── */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--gf-bg-elevated);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gf-orange);
+    border: 2px solid var(--gf-bg-canvas);
+    box-shadow: 0 0 0 1px var(--gf-orange);
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gf-orange) 30%, transparent);
+}
+input[type="range"]::-moz-range-thumb {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gf-orange);
+    border: 2px solid var(--gf-bg-canvas);
+    cursor: pointer;
+}
+
+/* ── Grafana button base ──────────────────────────────────────────────────── */
+.gf-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.1s, border-color 0.1s;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.gf-button-primary {
+    background: var(--gf-orange);
+    color: #1a1a1a;
+    border-color: var(--gf-orange);
+}
+.gf-button-primary:hover {
+    background: color-mix(in srgb, var(--gf-orange) 85%, #fff);
+}
+
+.gf-button-secondary {
+    background: var(--gf-bg-elevated);
+    color: var(--gf-text-primary);
+    border-color: var(--gf-border);
+}
+.gf-button-secondary:hover {
+    background: color-mix(in srgb, var(--gf-bg-elevated) 80%, #fff 20%);
+    border-color: var(--gf-text-disabled);
+}
+
+/* ── Grafana tag / badge ──────────────────────────────────────────────────── */
+.gf-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'DM Mono', 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    background: var(--gf-bg-elevated);
+    color: var(--gf-text-secondary);
+    border: 1px solid var(--gf-border);
+}
+
+.gf-badge-orange { background: color-mix(in srgb, var(--gf-orange) 15%, transparent); color: var(--gf-orange); border-color: color-mix(in srgb, var(--gf-orange) 30%, transparent); }
+.gf-badge-blue   { background: color-mix(in srgb, var(--gf-blue) 15%, transparent);   color: var(--gf-blue);   border-color: color-mix(in srgb, var(--gf-blue) 30%, transparent); }
+.gf-badge-green  { background: color-mix(in srgb, var(--gf-green) 15%, transparent);  color: var(--gf-green);  border-color: color-mix(in srgb, var(--gf-green) 30%, transparent); }
+.gf-badge-red    { background: color-mix(in srgb, var(--gf-red) 15%, transparent);    color: var(--gf-red);    border-color: color-mix(in srgb, var(--gf-red) 30%, transparent); }
+
+/* ── Grafana separator ────────────────────────────────────────────────────── */
+.gf-divider {
+    height: 1px;
+    background: var(--gf-border-weak);
+    margin: 0;
+}
+
+/* ── Grafana tooltip ──────────────────────────────────────────────────────── */
+.gf-tooltip {
+    background: var(--gf-bg-elevated);
+    border: 1px solid var(--gf-border);
+    border-radius: 2px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--gf-text-primary);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+
+/* ── Utility: Grafana monospace label ─────────────────────────────────────── */
+.gf-mono {
+    font-family: 'DM Mono', 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--gf-text-secondary);
+    letter-spacing: 0.04em;
+}
+
+
+
+
+
+.majestic-title {
+  font-family: 'Cinzel', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+
+  /* Brighter, richer gold gradient */
+  background: linear-gradient(
+    to bottom,
+    #fff2b2 0%,   /* Bright highlight */
+    #f1c75b 30%,  /* Vivid gold */
+    #d4af37 55%,  /* Classic gold */
+    #b8862b 100%  /* Warm bronze (lighter than before) */
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Depth + shine */
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}

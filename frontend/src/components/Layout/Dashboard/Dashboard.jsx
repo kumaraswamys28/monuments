@@ -15,7 +15,7 @@ import AQIcard from "./cards/AQI";
 import Rainfallcard from "./cards/Rain";
 import DeviceIDcard from "./cards/Device";
 import LastUpdateCard from "./cards/LastUpdateCard.jsx"
-import Renderer from "../../Rendering/Renderer";
+import Renderer from "../../Rendering/Rendering-home/Renderer.jsx";
 // import { Outlet } from "react-router-dom"
 
 

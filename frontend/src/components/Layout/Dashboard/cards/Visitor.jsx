@@ -170,6 +170,123 @@ function Visitorcard({ res = 0, capacity = 500 }) {
         }
       `}</style>
 
+      {/* <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600;700&display=swap');
+
+        .vsc-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #1f2329;
+          border: 1px solid #34383f;
+          border-radius: 12px;
+          padding: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          align-items: center;
+          min-height: 200px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          transition: box-shadow 0.2s ease;
+        }
+        .vsc-root:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+        .vsc-left { display: flex; flex-direction: column; gap: 4px; }
+
+        .vsc-zone-badge {
+          display: inline-flex; align-items: center; gap: 6px;
+          border-radius: 20px; padding: 3px 10px 3px 6px;
+          margin-bottom: 8px; width: fit-content;
+          background: ${zone.bg}; border: 1px solid ${zone.color}33;
+        }
+        .vsc-zone-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: ${zone.color};
+          animation: vsc-pulse 2s ease-in-out infinite;
+        }
+        @keyframes vsc-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .vsc-zone-text {
+          font-family: 'DM Mono', monospace; font-size: 11px;
+          letter-spacing: 1.5px; color: ${zone.color}; font-weight: 500;
+        }
+        .vsc-section-label {
+          font-family: 'DM Mono', monospace; font-size: 14px;
+          letter-spacing: 1px; color: #8e9099;
+          text-transform: uppercase; font-weight: 500; margin-bottom: 1px;
+        }
+        .vsc-current-row { display: flex; align-items: flex-end; gap: 4px; line-height: 1; }
+        .vsc-current-val {
+          font-size: 62px; font-weight: 700; color: #d0d1d3;
+          letter-spacing: -2px; line-height: 1;
+          font-variant-numeric: tabular-nums; transition: color 0.4s ease;
+        }
+        .vsc-current-val.flash { color: ${zone.color}; }
+        .vsc-trend { font-size: 18px; padding-bottom: 10px; font-weight: 600; color: ${zone.color}; }
+        .vsc-divider { height: 1px; background: #2c3038; margin: 10px 0; }
+        .vsc-minmax { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .vsc-stat-label {
+          font-family: 'DM Mono', monospace; font-size: 11px;
+          letter-spacing: 1px; color: #8e9099;
+          text-transform: uppercase; font-weight: 500; margin-bottom: 2px;
+        }
+        .vsc-stat-val { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .vsc-stat-val.min { color: #5794f2; }
+        .vsc-stat-val.max { color: #f2495c; }
+
+        .vsc-right {
+          display: flex; flex-direction: column;
+          align-items: stretch; gap: 8px;
+        }
+
+        .vsc-grid-wrap {
+          background: #181b1f;
+          border: 1px solid #34383f;
+          border-radius: 8px;
+          padding: 10px 10px 8px;
+        }
+        .vsc-grid-header {
+          display: flex; justify-content: space-between; align-items: center;
+          margin-bottom: 7px;
+        }
+        .vsc-grid-title {
+          font-family: 'DM Mono', monospace; font-size: 10px;
+          letter-spacing: 1px; color: #8e9099; text-transform: uppercase;
+        }
+        .vsc-grid-ratio {
+          font-family: 'DM Mono', monospace; font-size: 10px;
+          font-weight: 600; color: ${zone.color};
+        }
+        .vsc-icon-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2px;
+        }
+
+        .vsc-capacity-row {
+          display: flex; align-items: center; gap: 8px;
+        }
+        .vsc-capacity-label {
+          font-family: 'DM Mono', monospace; font-size: 13px;
+          letter-spacing: 0.5px; color: #8e9099;
+          white-space: nowrap; font-weight: 500; flex-shrink: 0;
+        }
+        .vsc-capacity-bar-wrap {
+          flex: 1; height: 5px; background: #2a2e36;
+          border-radius: 99px; overflow: hidden;
+        }
+        .vsc-capacity-bar-fill {
+          height: 100%; border-radius: 99px;
+          background: ${zone.color};
+          width: ${pct}%;
+          transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1), background 0.4s ease;
+        }
+        .vsc-pct-label {
+          font-family: 'DM Mono', monospace; font-size: 9px;
+          font-weight: 600; color: ${zone.color}; flex-shrink: 0;
+        }
+      `}</style> */}
+
       <div className="vsc-root">
         {/* Left */}
         <div className="vsc-left">
